@@ -16,6 +16,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,7 +45,7 @@ jobs:
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: release/wwwroot
 
