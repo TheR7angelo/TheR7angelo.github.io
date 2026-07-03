@@ -1,4 +1,5 @@
 @inherits LayoutComponentBase
+@using TheR7angelo.github.io.Resources.Resx.HomePage
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
@@ -7,92 +8,42 @@
 
 <MudLayout>
 
-    <MudAppBar Elevation="1" >
+    <MudAppBar Elevation="1">
+        <MudText Typo="Typo.h6" Class="cx-2">TheR7angelo</MudText>
+
         <MudSpacer />
 
-        <MudText Typo="Typo.h2" Class="mb-3">Application</MudText>
+        <MudText Typo="Typo.h3" Class="cx-2" Color="Color.Inherit">@HomePageResources.NavBarTitle</MudText>
 
-        <MudSpacer/>
+        <MudSpacer />
+
+        <MudButton Href="https://github.com/TheR7angelo"
+                   StartIcon="@(Icons.Custom.Brands.GitHub)"
+                   Target="_blank"
+                   Color="Color.Inherit"
+                   Variant="Variant.Text">
+            GitHub
+        </MudButton>
 
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle"/>
-
-        <MudLink Href="https://learn.microsoft.com/aspnet/core/" Target="_blank" Color="Color.Inherit" Underline="Underline.None">
-            About
-        </MudLink>
 
     </MudAppBar>
 
     <MudMainContent Class="pt-16 pa-4">
-        <MudContainer MaxWidth="MaxWidth.Medium">
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+
+            <div class="d-flex flex-column align-center text-center mb-8">
+                <MudText Typo="Typo.h3" Color="Color.Primary" Class="font-weight-bold mb-2">
+                    @HomePageResources.MainLayoutTitle
+                </MudText>
+                <MudText Typo="Typo.h6" @_theme?.PaletteDark.TextSecondary>
+                    @HomePageResources.MainLayoutSubTitle
+                </MudText>
+            </div>
+
             @Body
+
         </MudContainer>
     </MudMainContent>
 
 </MudLayout>
-
-@code {
-    private bool _isDarkMode = true;
-    private MudTheme? _theme;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        _theme = new()
-        {
-            PaletteLight = _lightPalette,
-            PaletteDark = _darkPalette,
-            LayoutProperties = new LayoutProperties()
-        };
-    }
-
-    private void DarkModeToggle()
-    {
-        _isDarkMode = !_isDarkMode;
-    }
-
-    private readonly PaletteLight _lightPalette = new()
-    {
-        Black = "#110e2d",
-        AppbarText = "#424242",
-        AppbarBackground = "rgba(255,255,255,0.8)",
-        DrawerBackground = "#ffffff",
-        GrayLight = "#e8e8e8",
-        GrayLighter = "#f9f9f9",
-    };
-
-    private readonly PaletteDark _darkPalette = new()
-    {
-        Primary = "#7e6fff",
-        Surface = "#1e1e2d",
-        Background = "#1a1a27",
-        BackgroundGray = "#151521",
-        AppbarText = "#92929f",
-        AppbarBackground = "rgba(26,26,39,0.8)",
-        DrawerBackground = "#1a1a27",
-        ActionDefault = "#74718e",
-        ActionDisabled = "#9999994d",
-        ActionDisabledBackground = "#605f6d4d",
-        TextPrimary = "#b2b0bf",
-        TextSecondary = "#92929f",
-        TextDisabled = "#ffffff33",
-        DrawerIcon = "#92929f",
-        DrawerText = "#92929f",
-        GrayLight = "#2a2833",
-        GrayLighter = "#1e1e2d",
-        Info = "#4a86ff",
-        Success = "#3dcb6c",
-        Warning = "#ffb545",
-        Error = "#ff3f5f",
-        LinesDefault = "#33323e",
-        TableLines = "#33323e",
-        Divider = "#292838",
-        OverlayLight = "#1e1e2d80",
-    };
-
-    public string DarkLightModeButtonIcon => _isDarkMode switch
-    {
-        true => Icons.Material.Rounded.AutoMode,
-        false => Icons.Material.Outlined.DarkMode,
-    };
-}
