@@ -38,9 +38,6 @@ jobs:
       - name: Add .nojekyll
         run: touch release/wwwroot/.nojekyll
 
-      - name: Set GitHub Pages base path
-        run: sed -i 's|<base href="/" />|<base href="/TheR7angelo.github/" />|' release/wwwroot/index.html
-
       - name: Copy index.html to 404.html
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
