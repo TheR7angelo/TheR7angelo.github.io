@@ -20,6 +20,12 @@
 
   <ItemGroup>
     <Content Include=".github\workflows\deploy.yml" />
+    <None Remove="Resources\Assets\DataBase\postgresql.svg" />
+    <Content Include="Resources\Assets\DataBase\postgresql.svg" />
+    <None Remove="Resources\Assets\DataBase\sql-server.svg" />
+    <Content Include="Resources\Assets\DataBase\sql-server.svg" />
+    <None Remove="Resources\Assets\DataBase\sqlite.svg" />
+    <Content Include="Resources\Assets\DataBase\sqlite.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +41,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>HomePageResources.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Assets\DataBase\" />
   </ItemGroup>
 
 </Project>
