@@ -30,15 +30,18 @@
     </MudAppBar>
 
     <MudMainContent Class="pt-16 pa-4">
-        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+        <MudContainer>
 
             <div class="d-flex flex-column align-center text-center mb-8">
+
                 <MudText Typo="Typo.h3" Color="Color.Primary" Class="font-weight-bold mb-2">
                     @HomePageResources.MainLayoutTitle
                 </MudText>
+
                 <MudText Typo="Typo.h6" @_theme?.PaletteDark.TextSecondary>
                     @HomePageResources.MainLayoutSubTitle
                 </MudText>
+
             </div>
 
             @Body

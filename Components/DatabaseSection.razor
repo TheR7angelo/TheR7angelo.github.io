@@ -1,0 +1,24 @@
+﻿<MudGrid justify="Justify.Center">
+
+    @foreach(var dataBaseTechnology in DataBaseTechnologies)
+    {
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="2"
+                     Class="pa-4 hover:mud-elevation-5"
+                     Style="cursor: pointer;
+                     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                     onmouseover="this.style.transform='translateY(-10px)'"
+                     onmouseout="this.style.transform='translateY(0)'"
+                     @onclick='() => NavigateToDatabase(dataBaseTechnology.Name)'>
+                <MudCardContent Class="d-flex flex-column align-center">
+                    <MudImage Src="@dataBaseTechnology.LogoPath" Alt="@($"{dataBaseTechnology.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
+                    <MudText Typo="Typo.h6">@dataBaseTechnology.Name</MudText>
+                </MudCardContent>
+
+                <MudCardActions Class="justify-center">
+                    <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl">Learn more</MudLink>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>

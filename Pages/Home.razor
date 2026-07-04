@@ -1,85 +1,10 @@
 @page "/"
-@inject ILogger<Home> Logger
+@using TheR7angelo.github.io.Components
 
 <PageTitle>Home</PageTitle>
 
-<MudGrid justify="Justify.Center">
+<MudPaper Outlined="true" Elevation="0" Class="py-6 px-4 ma-4">
 
-    <MudItem xs="12" md="4">
-        <MudCard Elevation="1"
-                 Class="pa-4 hover:mud-elevation-5"
-                 Style="cursor: pointer;
-                 transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
-                 onmouseover="this.style.transform='translateY(-10px)'"
-                 onmouseout="this.style.transform='translateY(0)'"
-                 @onclick='() => NavigateToDatabase("PostgreSql")'>
+    <DatabaseSection />
 
-            <MudCardContent Class="d-flex flex-column align-center">
-                <MudImage Src="/Assets/DataBase/postgresql.svg" Alt="PostgreSQL Logo" Width="100" Height="100"
-                          Class="mb-3"/>
-                <MudText Typo="Typo.h6">PostgreSQL</MudText>
-            </MudCardContent>
-
-            <MudCardActions Class="justify-center">
-                <MudLink Color="Color.Info" Target="_blank" Href="https://www.postgresql.org/">Learn more</MudLink>
-            </MudCardActions>
-
-        </MudCard>
-    </MudItem>
-
-    <MudItem xs="12" md="4">
-        <MudCard Elevation="1"
-                 Class="pa-4 hover:mud-elevation-5"
-                 Style="cursor: pointer;
-                 transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
-                 onmouseover="this.style.transform='translateY(-10px)'"
-                 onmouseout="this.style.transform='translateY(0)'"
-                 @onclick='() => NavigateToDatabase("PostgreSql")'>
-
-            <MudCardContent Class="d-flex flex-column align-center">
-                <MudImage Src="/Assets/DataBase/sql-server.svg" Alt="SQL Server Logo" Width="100" Height="100"
-                          Class="mb-3"/>
-                <MudText Typo="Typo.h6">SQL Server</MudText>
-            </MudCardContent>
-
-            <MudCardActions Class="justify-center">
-                <MudLink Color="Color.Info" Target="_blank" Href="https://learn.microsoft.com/en-us/sql/sql-server/">Learn more</MudLink>
-            </MudCardActions>
-
-        </MudCard>
-    </MudItem>
-
-    <MudItem xs="12" md="4">
-        <MudCard Elevation="1"
-                 Class="pa-4 hover:mud-elevation-5"
-                 Style="cursor: pointer;
-                 transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
-                 onmouseover="this.style.transform='translateY(-10px)'"
-                 onmouseout="this.style.transform='translateY(0)'"
-                 @onclick='() => NavigateToDatabase("PostgreSql")'>
-
-            <MudCardContent Class="d-flex flex-column align-center">
-                <MudImage Src="/Assets/DataBase/sqlite.svg" Alt="SQLite Logo" Width="100" Height="100" Class="mb-3"/>
-                <MudText Typo="Typo.h6">SQLite</MudText>
-            </MudCardContent>
-
-            <MudCardActions Class="justify-center">
-                <MudLink Color="Color.Info" Target="_blank" Href="https://sqlite.org/">Learn more</MudLink>
-            </MudCardActions>
-
-        </MudCard>
-    </MudItem>
-
-</MudGrid>
-
-
-@code {
-
-    private Task NavigateToDatabase(string dataBase)
-    {
-        Logger.LogInformation("Navigating to {Mysql} database page...", dataBase);
-
-        return Task.CompletedTask;
-    }
-
-}
+</MudPaper>
