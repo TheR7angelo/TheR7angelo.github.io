@@ -74,4 +74,7 @@
     <data name="ProjectDialogButtonCloseContent" xml:space="preserve">
         <value>Close</value>
     </data>
+    <data name="Criticality" xml:space="preserve">
+        <value>Criticality</value>
+    </data>
 </root>

@@ -60,6 +60,15 @@ namespace TheR7angelo.github.io.Resources.Resx.DatabaseProject {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Criticality.
+        /// </summary>
+        internal static string Criticality {
+            get {
+                return ResourceManager.GetString("Criticality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 🚀 Architecture &amp; Optimization: Modeling of a spatial database (PostGIS) and indexing of complex geospatial queries.
         ///
         ///⚙️ Automation &amp; ETL: Writing stored functions for processing multi-format import/export geometries and scripts.
