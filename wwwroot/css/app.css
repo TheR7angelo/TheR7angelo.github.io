@@ -1,5 +1,27 @@
+:root {
+    --app-background: #f7f8fc;
+    --loading-track: #d9dce7;
+    --loading-accent: #594AE2;
+    --loading-text: #3b3f55;
+}
+
+html[data-theme="dark"] {
+    --app-background: #1a1a27;
+    --loading-track: #2a2833;
+    --loading-accent: #7e6fff;
+    --loading-text: #b2b0bf;
+}
+
+html[data-theme="light"] {
+    --app-background: #f7f8fc;
+    --loading-track: #d9dce7;
+    --loading-accent: #594AE2;
+    --loading-text: #3b3f55;
+}
+
 html, body {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    background: var(--app-background);
 }
 
 #blazor-error-ui {
@@ -71,16 +93,16 @@ html, body {
     margin: 0 auto 0 auto;
 }
 
-    .loading-progress circle {
+.loading-progress circle {
         fill: none;
-        stroke: #e0e0e0;
+        stroke: var(--loading-track);
         stroke-width: 0.6rem;
         transform-origin: 50% 50%;
         transform: rotate(-90deg);
     }
 
         .loading-progress circle:last-child {
-            stroke: #594AE2;
+            stroke: var(--loading-accent);
             stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
             transition: stroke-dasharray 0.05s ease-in-out;
         }
@@ -89,6 +111,7 @@ html, body {
     position: absolute;
     text-align: center;
     font-weight: bold;
+    color: var(--loading-text);
     inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
 }
 
