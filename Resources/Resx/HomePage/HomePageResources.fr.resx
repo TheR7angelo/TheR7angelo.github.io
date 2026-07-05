@@ -11,13 +11,16 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="MainLayoutTitle" xml:space="preserve">
-        <value>Développeur Full Stack .NET &amp; DBA</value>
+    <data name="MainLayoutTitle1" xml:space="preserve">
+        <value>Full Stack</value>
     </data>
     <data name="MainLayoutSubTitle" xml:space="preserve">
         <value>Concepteur d'applications robustes et spécialiste de la performance des données</value>
     </data>
     <data name="NavBarTitle" xml:space="preserve">
         <value>Portfolio</value>
+    </data>
+    <data name="MainLayoutTitle2" xml:space="preserve">
+        <value>Développeur .NET</value>
     </data>
 </root>

@@ -69,11 +69,20 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Full Stack .NET Developer &amp; DBA.
+        ///   Looks up a localized string similar to Full Stack.
         /// </summary>
-        internal static string MainLayoutTitle {
+        internal static string MainLayoutTitle1 {
             get {
-                return ResourceManager.GetString("MainLayoutTitle", resourceCulture);
+                return ResourceManager.GetString("MainLayoutTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .NET Developer.
+        /// </summary>
+        internal static string MainLayoutTitle2 {
+            get {
+                return ResourceManager.GetString("MainLayoutTitle2", resourceCulture);
             }
         }
         
