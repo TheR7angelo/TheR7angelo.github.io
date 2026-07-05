@@ -4,15 +4,50 @@
     </TitleContent>
 
     <DialogContent>
+
         <MudText Typo="Typo.body1" Class="mb-4">
-            Voici les projets majeurs où j'ai conçu et exploité la base de données <strong>@TechName</strong> :
+            @* TODO trad *@
+            Voici les projets majeurs où j'ai conçu et exploité la base de données <strong>@TechName</strong>&nbsp;:
         </MudText>
 
-        @foreach (var project in Projects)
-        {
-            <MudText Typo="Typo.h6" Color="Color.Primary">@project.IconAndTitle</MudText>
-            <MudText Typo="Typo.body2" Class="mb-3" Style="white-space: pre-line;">@project.Description</MudText>
-        }
+        <MudExpansionPanels MultiExpansion="true" Elevation="1" Class="mb-3">
+
+            @foreach (var project in Projects)
+            {
+                <MudExpansionPanel Expanded="Projects.Count == 1" Class="mb-3">
+
+                    <TitleContent>
+                        <div class="d-flex align-center justify-space-between w-100 pe-4">
+
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@project.IconAndTitle</MudText>
+
+                            <div class="d-flex flex-row align-center gap-1 flex-none" style="white-space: nowrap;">
+
+                                <MudText Typo="Typo.caption" Color="Color.Secondary" Class="fw-bold">Criticité&nbsp;:</MudText>
+
+                                <MudTooltip Text="@($"{project.Importance} / 5")" Placement="Placement.Top" Arrow="true">
+                                    <ChildContent>
+                                        <MudRating SelectedValue="@project.Importance"
+                                                   ReadOnly="true"
+                                                   Color="Color.Warning"
+                                                   MaxValue="5"
+                                                   Size="Size.Small" />
+                                    </ChildContent>
+                                </MudTooltip>
+
+                            </div>
+
+                        </div>
+                    </TitleContent>
+
+                    <ChildContent>
+                        <MudText Typo="Typo.body2" Style="white-space: pre-line;">@project.Description</MudText>
+                    </ChildContent>
+
+                </MudExpansionPanel>
+            }
+
+        </MudExpansionPanels>
 
     </DialogContent>
 

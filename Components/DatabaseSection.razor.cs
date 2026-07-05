@@ -59,13 +59,13 @@ public partial class DatabaseSection
 }
 
 public record DataBaseTechnology(
-    DataBaseTechnologyEnum Id,
+    DataBaseTechnologyEnum TechType,
     string Name,
     string LogoPath,
     string LearnMoreUrl,
     List<ProjectDescription>? Projects);
 
-public record ProjectDescription(string IconAndTitle, string Description);
+public record ProjectDescription(string IconAndTitle, string Description, int Importance = 0);
 
 public enum DataBaseTechnologyEnum
 {
