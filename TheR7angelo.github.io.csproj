@@ -39,6 +39,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DefinitionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Remove="Resources\Data\city_boundary.geojson" />
+    <EmbeddedResource Include="Resources\Data\city_boundary.geojson" />
+    <None Remove="Resources\Data\company_site.geojson" />
+    <EmbeddedResource Include="Resources\Data\company_site.geojson" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +66,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DefinitionResources.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Data\" />
   </ItemGroup>
 
 </Project>
