@@ -1,4 +1,6 @@
-﻿<MudDialog>
+﻿@using TheR7angelo.github.io.Resources.Resx.DatabaseProject
+
+<MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h5">Projets réalisés avec @TechName</MudText>
     </TitleContent>
@@ -6,8 +8,7 @@
     <DialogContent>
 
         <MudText Typo="Typo.body1" Class="mb-4">
-            @* TODO trad *@
-            Voici les projets majeurs où j'ai conçu et exploité la base de données <strong>@TechName</strong>&nbsp;:
+            @DatabaseProjectResources.ProjectDialogHeaderContent <strong>@TechName</strong>&nbsp;:
         </MudText>
 
         <MudExpansionPanels MultiExpansion="true" Elevation="1" Class="mb-3">
@@ -52,8 +53,7 @@
     </DialogContent>
 
     <DialogActions>
-        @* TODO trad *@
-        <MudButton Color="Color.Primary" OnClick="@Close">Fermer</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@Close">@DatabaseProjectResources.ProjectDialogButtonCloseContent</MudButton>
     </DialogActions>
 
 </MudDialog>
