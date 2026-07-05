@@ -1,11 +1,23 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using MudBlazor;
+using TheR7angelo.github.io.Resources.Resx.HomePage;
 
 namespace TheR7angelo.github.io.Layout;
 
 public partial class MainLayout
 {
     private bool _isDarkMode = true;
+    private bool _isNavigationDrawerOpen;
     private MudTheme? _theme;
+    private bool _isThemeInitialized;
+
+    public const string DatabasesSectionId = "databases-title";
+
+    private readonly List<AnchorSection> _sections =
+    [
+        new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage }
+    ];
 
     protected override void OnInitialized()
     {
@@ -19,8 +31,28 @@ public partial class MainLayout
         };
     }
 
-    private void DarkModeToggle()
-        => _isDarkMode = !_isDarkMode;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _isThemeInitialized)
+        {
+            return;
+        }
+
+        var preferredTheme = await JsRuntime.InvokeAsync<string>("ThemeHelper.getPreferredTheme");
+        _isDarkMode = preferredTheme == "dark";
+        _isThemeInitialized = true;
+        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", preferredTheme);
+        StateHasChanged();
+    }
+
+    private async Task DarkModeToggle()
+    {
+        _isDarkMode = !_isDarkMode;
+        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", _isDarkMode ? "dark" : "light");
+    }
+
+    private void ToggleNavigationDrawer()
+        => _isNavigationDrawerOpen = !_isNavigationDrawerOpen;
 
     private readonly PaletteLight _lightPalette = new()
     {
@@ -61,9 +93,22 @@ public partial class MainLayout
         OverlayLight = "#1e1e2d80",
     };
 
+    public MainLayout(IJSRuntime jsRuntime)
+    {
+        JsRuntime = jsRuntime;
+    }
+
     private string DarkLightModeButtonIcon => _isDarkMode switch
     {
         true => Icons.Material.Rounded.LightMode,
         false => Icons.Material.Outlined.DarkMode,
     };
+
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; }
+
+    private async Task ScrollToSection(string elementId)
+    {
+        await JsRuntime.InvokeVoidAsync("ScrollHelper.scrollToElement", elementId);
+    }
 }

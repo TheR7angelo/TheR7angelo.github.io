@@ -10,6 +10,13 @@
 <MudLayout>
 
     <MudAppBar Elevation="1">
+
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                       Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       OnClick="@ToggleNavigationDrawer">
+        </MudIconButton>
+
         <MudText Typo="Typo.h6" Class="cx-2">TheR7angelo</MudText>
 
         <MudSpacer />
@@ -30,38 +37,53 @@
 
     </MudAppBar>
 
+    <MudDrawer Open="@_isNavigationDrawerOpen"
+               Variant="DrawerVariant.Persistent"
+               ClipMode="DrawerClipMode.Always"
+               Elevation="1">
+
+        <MudDrawerHeader Class="d-flex align-center justify-space-between">
+            <MudText Typo="Typo.subtitle1" Class="font-weight-bold">@HomePageResources.MainLayoutDrawerTitle</MudText>
+        </MudDrawerHeader>
+
+        <MudNavMenu>
+            @foreach (var anchor in _sections)
+            {
+                <MudNavLink OnClick="@(() => ScrollToSection(anchor.Id))" Icon="@anchor.Icon">
+                    @anchor.Title
+                </MudNavLink>
+            }
+        </MudNavMenu>
+    </MudDrawer>
+
     <MudMainContent Class="pt-16 pa-4">
         <MudContainer>
 
-            <div class="d-flex flex-column align-center text-center mb-8">
+            <MudText Typo="Typo.h3" Color="Color.Primary" Class="font-weight-bold mb-2">
+                @HomePageResources.MainLayoutTitle1
 
-                <MudText Typo="Typo.h3" Color="Color.Primary" Class="font-weight-bold mb-2">
-                    @HomePageResources.MainLayoutTitle1
+                <MudLink Href="https://dotnet.microsoft.com/en-us/download" Underline="Underline.Always" Target="_blank">@HomePageResources.MainLayoutTitle2</MudLink>
 
-                    <MudLink Href="https://dotnet.microsoft.com/en-us/download" Underline="Underline.Always" Target="_blank">@HomePageResources.MainLayoutTitle2</MudLink>
+                &
 
-                    &
+                <MudTooltip Placement="Placement.Top" Arrow="true" Color="Color.Dark">
 
-                    <MudTooltip Placement="Placement.Top" Arrow="true" Color="Color.Dark">
+                    <ChildContent>
+                        <span style="border-bottom: 1px dashed; cursor: help;">DBA</span>
+                    </ChildContent>
 
-                        <ChildContent>
-                            <span style="border-bottom: 1px dashed; cursor: help;">DBA</span>
-                        </ChildContent>
+                    <TooltipContent>
+                        <MudText Typo="Typo.body2" Class="pa-1">
+                            <strong>@DefinitionResources.DbaDefinitionHeader</strong> @DefinitionResources.DbaDefinitionContent
+                        </MudText>
+                    </TooltipContent>
 
-                        <TooltipContent>
-                            <MudText Typo="Typo.body2" Class="pa-1">
-                                <strong>@DefinitionResources.DbaDefinitionHeader</strong> @DefinitionResources.DbaDefinitionContent
-                            </MudText>
-                        </TooltipContent>
+                </MudTooltip>
+            </MudText>
 
-                    </MudTooltip>
-                </MudText>
-
-                <MudText Typo="Typo.h6" @_theme?.PaletteDark.TextSecondary>
-                    @HomePageResources.MainLayoutSubTitle
-                </MudText>
-
-            </div>
+            <MudText Typo="Typo.h6" Style="color: var(--mud-palette-text-secondary);">
+                @HomePageResources.MainLayoutSubTitle
+            </MudText>
 
             @Body
 

@@ -1,37 +1,43 @@
 ﻿@using TheR7angelo.github.io.Resources.Resx.DatabaseSection
 @using TheR7angelo.github.io.Resources.Resx.Definition
+@using TheR7angelo.github.io.Resources.Resx.HomePage
 
-<MudGrid justify="Justify.Center">
+<section class="anchor-section">
+    <MudText Typo="Typo.h4" id="@MainLayout.DatabasesSectionId" Class="mb-5 section-heading-anchor">
+        @HomePageResources.DatabasesSectionTitle
+    </MudText>
 
-    @foreach(var dataBaseTechnology in DataBaseTechnologies)
-    {
-        <MudItem xs="12" md="4">
+    <MudGrid justify="Justify.Center">
 
-            <MudCard Elevation="2"
-                     Class="pa-4 hover:mud-elevation-5"
-                     Style="cursor: pointer;
-                     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
-                     onmouseover="this.style.transform='translateY(-10px)'"
-                     onmouseout="this.style.transform='translateY(0)'"
-                     @onclick='() => NavigateToDatabase(dataBaseTechnology)'>
+        @foreach(var dataBaseTechnology in DataBaseTechnologies)
+        {
+            <MudItem xs="12" md="4">
 
-                <MudCardContent Class="d-flex flex-column align-center">
-                    <MudImage Src="@dataBaseTechnology.LogoPath" Alt="@($"{dataBaseTechnology.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
-                    <MudText Typo="Typo.h6">@dataBaseTechnology.Name</MudText>
-                </MudCardContent>
+                <MudCard Elevation="2"
+                         Class="pa-4 hover:mud-elevation-5"
+                         Style="cursor: pointer;
+                         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                         onmouseover="this.style.transform='translateY(-10px)'"
+                         onmouseout="this.style.transform='translateY(0)'"
+                         @onclick='() => NavigateToDatabase(dataBaseTechnology)'>
 
-                <MudCardActions Class="justify-center">
-                    <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl">Learn more</MudLink>
-                </MudCardActions>
+                    <MudCardContent Class="d-flex flex-column align-center">
+                        <MudImage Src="@dataBaseTechnology.LogoPath" Alt="@($"{dataBaseTechnology.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
+                        <MudText Typo="Typo.h6">@dataBaseTechnology.Name</MudText>
+                    </MudCardContent>
 
-            </MudCard>
+                    <MudCardActions Class="justify-center">
+                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl">Learn more</MudLink>
+                    </MudCardActions>
 
-        </MudItem>
-    }
+                </MudCard>
 
-</MudGrid>
+            </MudItem>
+        }
 
-<div class="mt-6 d-flex flex-column gap-3">
+    </MudGrid>
+
+    <div class="mt-6 d-flex flex-column gap-3">
 
     <MudText Typo="Typo.subtitle1" Class="fw-bold d-flex align-center gap-1" Color="Color.Primary">
         @DatabaseSectionResources.MyVision
@@ -87,4 +93,5 @@
         </MudText>
     </div>
 
-</div>
+    </div>
+</section>

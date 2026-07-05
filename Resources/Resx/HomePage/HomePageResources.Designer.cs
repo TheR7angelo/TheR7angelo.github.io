@@ -60,6 +60,24 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ⚡ Database Architecture &amp; Optimization.
+        /// </summary>
+        internal static string DatabasesSectionTitle {
+            get {
+                return ResourceManager.GetString("DatabasesSectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigation.
+        /// </summary>
+        internal static string MainLayoutDrawerTitle {
+            get {
+                return ResourceManager.GetString("MainLayoutDrawerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Building robust applications and optimizing data performance.
         /// </summary>
         internal static string MainLayoutSubTitle {

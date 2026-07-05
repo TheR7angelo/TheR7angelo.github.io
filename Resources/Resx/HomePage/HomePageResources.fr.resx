@@ -23,4 +23,10 @@
     <data name="MainLayoutTitle2" xml:space="preserve">
         <value>Développeur .NET</value>
     </data>
+    <data name="DatabasesSectionTitle" xml:space="preserve">
+        <value>⚡ Architecture &amp; Optimisation de base de données</value>
+    </data>
+    <data name="MainLayoutDrawerTitle" xml:space="preserve">
+        <value>Navigation</value>
+    </data>
 </root>
