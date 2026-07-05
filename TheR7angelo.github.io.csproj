@@ -31,6 +31,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DatabaseProjectResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resx\DatabaseSection\DatabaseSectionResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DatabaseSectionResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resx\Definition\DefinitionResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefinitionResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +51,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DatabaseProjectResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\DatabaseSection\DatabaseSectionResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DatabaseSectionResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\Definition\DefinitionResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DefinitionResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

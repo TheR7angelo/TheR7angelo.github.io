@@ -1,0 +1,38 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="MyVision" xml:space="preserve">
+        <value>💡 Ma vision</value>
+    </data>
+    <data name="ArchitectureSchematicsHeader" xml:space="preserve">
+        <value>Architecture &amp; Schémas :</value>
+    </data>
+    <data name="ArchitectureSchematicsContent" xml:space="preserve">
+        <value>Requêtes ciblées, vues matérialisées pour alléger la charge, et typage au plus juste (VARCHAR bridés) pour économiser la mémoire.</value>
+    </data>
+    <data name="PerformanceAutomationHeader" xml:space="preserve">
+        <value>Performance &amp; automatisation :</value>
+    </data>
+    <data name="PerformanceAutomationContent1" xml:space="preserve">
+        <value>Indexation chirurgicale sur les clauses</value>
+    </data>
+    <data name="PerformanceAutomationContent2" xml:space="preserve">
+        <value>, triggers pour éviter les redondances, et agrégation de stats asynchrones (pg_cron).</value>
+    </data>
+    <data name="MaintenanceOperationHeader" xml:space="preserve">
+        <value>Maintenance &amp; Opérations :</value>
+    </data>
+    <data name="MaintenanceOperationContent" xml:space="preserve">
+        <value>Diagnostics des requêtes lentes, Shrink/Réindexation pour la taille, backups automatisés et restauration granulaire (à la ligne près).</value>
+    </data>
+</root>
