@@ -63,13 +63,12 @@ public partial class MapWorkingAreaSection
         var layerCityBoundary = CreateLayerFromEmbeddedGeoJson(cityBoundaryGeojson, "City Boundary", cityBoundaryStyle, Logger);
         var layerCompanySite = CreateLayerFromEmbeddedGeoJson(companySiteGeojson, "Company Site", companySiteStyle, Logger);
 
-        var layers = new List<ILayer>();
-        if (layerCityBoundary is not null) layers.Add(layerCityBoundary);
-        if (layerCompanySite is not null) layers.Add(layerCompanySite);
+        if (layerCityBoundary is not null) Layers.Add(layerCityBoundary);
+        if (layerCompanySite is not null) Layers.Add(layerCompanySite);
 
-        _mapControl?.Map.Layers.Add(layers);
+        _mapControl?.Map.Layers.Add(Layers);
 
-        var globalExtent = layers.Select(layer => layer.Extent)
+        var globalExtent = Layers.Select(layer => layer.Extent)
             .OfType<MRect>()
             .Aggregate<MRect?, MRect?>(null, (current, layerExtent) => current is null
                 ? layerExtent
@@ -84,9 +83,11 @@ public partial class MapWorkingAreaSection
         _mapControl?.Map.Navigator.ZoomToBox(extentWithMargin);
     }
 
+    private List<ILayer> Layers { get; } = [];
+
     private void MapOnInfo(object? sender, MapInfoEventArgs e)
     {
-        var mapInfo = e.GetMapInfo(_mapControl!.Map.Layers);
+        var mapInfo = e.GetMapInfo(Layers);
         if (mapInfo.Feature is null) return;
 
         ShowFeatureInfoDialogAsync(mapInfo.Feature);

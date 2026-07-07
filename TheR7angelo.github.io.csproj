@@ -47,6 +47,10 @@
     <EmbeddedResource Include="Resources\Data\city_boundary.geojson" />
     <None Remove="Resources\Data\company_site.geojson" />
     <EmbeddedResource Include="Resources\Data\company_site.geojson" />
+    <EmbeddedResource Update="Resources\Resx\MapWorkingAreaSection\MapWorkingAreaSectionResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapWorkingAreaSectionResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +73,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DefinitionResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\MapWorkingAreaSection\MapWorkingAreaSectionResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MapWorkingAreaSectionResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

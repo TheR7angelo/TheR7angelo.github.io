@@ -1,55 +1,41 @@
 ﻿@using Mapsui.UI.Blazor
-@* @if (_selectedFeature is not null) *@
-@* { *@
-@*     <div class="map-info-popup animate-fade-in"> *@
-@*         <div class="popup-header"> *@
-@*             <h4>@(_selectedFeature["name"] ?? "Feature Details")</h4> *@
-@*             <button class="close-btn" @onclick="() => _selectedFeature = null">✕</button> *@
-@*         </div> *@
-@* *@
-@*         <div class="popup-body"> *@
-@*             <table class="metadata-table"> *@
-@*                 <tbody> *@
-@*                 @foreach (var key in _selectedFeature.Fields) *@
-@*                 { *@
-@*                     if (key is "name" || _selectedFeature[key] is null) continue; *@
-@* *@
-@*                     var value = _selectedFeature[key]?.ToString(); *@
-@*                     if (string.IsNullOrWhiteSpace(value)) continue; *@
-@* *@
-@*                     <tr> *@
-@*                         <td class="meta-key">@key :</td> *@
-@*                         <td class="meta-value"> *@
-@*                             @if (value.StartsWith("http://") || value.StartsWith("https://")) *@
-@*                             { *@
-@*                                 <MudLink href="@value" target="_blank" class="badge-link"> *@
-@*                                     @value *@
-@*                                 </MudLink> *@
-@*                             } *@
-@*                             else *@
-@*                             { *@
-@*                                 @value *@
-@*                             } *@
-@*                         </td> *@
-@*                     </tr> *@
-@*                 } *@
-@*                 </tbody> *@
-@*             </table> *@
-@*         </div> *@
-@*     </div> *@
-@* } *@
+@using TheR7angelo.github.io.Resources.Resx.HomePage
+@using TheR7angelo.github.io.Resources.Resx.MapWorkingAreaSection
 
-<div class="container">
-    <div class="row">
-        <div class="col border rounded p-2 canvas-container">
-            <MapControlComponent @ref="_mapControl" />
+<section lass="anchor-section">
+
+    <MudText Typo="Typo.h4" id="@MainLayout.MapWorkingAreaSectionId" Class="mb-5 section-heading-anchor">
+        @HomePageResources.MapWorkingAreaSectionTitle
+    </MudText>
+
+    <div class="container">
+        <div class="row">
+            <div class="col border rounded p-0 canvas-container">
+                <MapControlComponent @ref="_mapControl" />
+            </div>
         </div>
     </div>
-</div>
+
+    <MudText Class="mt-3">@MapWorkingAreaSectionResources.MyExplore</MudText>
+
+</section>
 
 <style>
+    .canvas-container {
+        height: 80vh;
+        overflow: hidden;
+        background-color: transparent;
+    }
+
     .canvas-container canvas {
         width: 100%;
         height: 80vh;
+        display: block;
+    }
+
+    .canvas-container ::deep .mapsui-container,
+    .canvas-container ::deep div {
+        height: 80vh !important;
+        display: block;
     }
 </style>
