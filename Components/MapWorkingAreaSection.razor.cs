@@ -6,16 +6,22 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.UI.Blazor;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using NetTopologySuite.Features;
 using NetTopologySuite.IO;
 using TheR7angelo.github.io.Pages;
+using Color = Mapsui.Styles.Color;
 using IFeature = Mapsui.IFeature;
 
 namespace TheR7angelo.github.io.Components;
 
 public partial class MapWorkingAreaSection
 {
-        [Inject] private ILogger<Home> Logger { get; set; } = null!;
+    [Inject]
+    private ILogger<Home> Logger { get; set; } = null!;
+
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
     private MapControl? _mapControl;
 
@@ -78,13 +84,23 @@ public partial class MapWorkingAreaSection
         _mapControl?.Map.Navigator.ZoomToBox(extentWithMargin);
     }
 
-    private IFeature? _selectedFeature;
-
     private void MapOnInfo(object? sender, MapInfoEventArgs e)
     {
         var mapInfo = e.GetMapInfo(_mapControl!.Map.Layers);
-        _selectedFeature = mapInfo.Feature ?? null;
-        InvokeAsync(StateHasChanged);
+        if (mapInfo.Feature is null) return;
+
+        ShowFeatureInfoDialogAsync(mapInfo.Feature);
+    }
+
+    private void ShowFeatureInfoDialogAsync(IFeature feature)
+    {
+        var parameters = new DialogParameters<MapWorkingAreaDialog>
+        {
+            { x => x.Feature, feature }
+        };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        DialogService.ShowAsync<MapWorkingAreaDialog>(string.Empty, parameters, options);
     }
 
     private GenericCollectionLayer<List<IFeature>>? CreateLayerFromEmbeddedGeoJson(

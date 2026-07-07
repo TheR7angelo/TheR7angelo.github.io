@@ -1,0 +1,50 @@
+﻿<MudDialog>
+
+    <TitleContent>
+        <MudText Typo="Typo.h6" Color="Color.Primary">
+            @(Feature["name"] ?? "Feature Details")
+        </MudText>
+    </TitleContent>
+
+    <DialogContent>
+        <div style="max-height: 300px; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tbody>
+                @foreach (var key in Feature.Fields)
+                {
+                    if (key is "name") continue;
+
+                    var value = Feature[key]?.ToString() ?? string.Empty;
+
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                        <td style="padding: 8px 0; color: var(--mud-palette-text-secondary); font-weight: 500; text-transform: capitalize; width: 35%;">
+                            @key
+                        </td>
+                        <td style="padding: 8px 0 8px 12px; color: var(--mud-palette-text-primary);">
+                            @if (value.StartsWith("http://") || value.StartsWith("https://"))
+                            {
+                                <MudLink Variant="Variant.Text"
+                                           Color="Color.Info"
+                                           EndIcon="@Icons.Material.Filled.Launch"
+                                           Href="@value"
+                                           Target="_blank"
+                                           Size="Size.Small"
+                                           Style="text-transform: none; padding: 0;">
+                                    @value
+                                </MudLink>
+                            }
+                            else
+                            {
+                                @value
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="@Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
