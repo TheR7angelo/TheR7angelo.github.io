@@ -105,6 +105,15 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 🏡My Anchor Points.
+        /// </summary>
+        internal static string MapWorkingAreaSectionTitle {
+            get {
+                return ResourceManager.GetString("MapWorkingAreaSectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portfolio.
         /// </summary>
         internal static string NavBarTitle {

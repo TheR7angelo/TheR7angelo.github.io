@@ -29,4 +29,7 @@
     <data name="MainLayoutDrawerTitle" xml:space="preserve">
         <value>Navigation</value>
     </data>
+    <data name="MapWorkingAreaSectionTitle" xml:space="preserve">
+        <value>🏡My Anchor Points</value>
+    </data>
 </root>
