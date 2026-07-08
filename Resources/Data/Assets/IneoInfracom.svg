@@ -28,7 +28,7 @@
                     id="path44"/>
         </clipPath>
         <linearGradient
-                id="Dégradé_sans_nom_5"
+                id="Gradient5"
                 x1="0"
                 y1="595.29999"
                 x2="1"
@@ -84,7 +84,7 @@
                     id="path54"/>
         </clipPath>
         <linearGradient
-                id="Dégradé_sans_nom_6"
+                id="Gradient6"
                 x1="0"
                 y1="595.28998"
                 x2="1"
@@ -140,7 +140,7 @@
                     id="path64"/>
         </clipPath>
         <linearGradient
-                id="Dégradé_sans_nom_7"
+                id="Gradient7"
                 x1="0"
                 y1="595.28998"
                 x2="1"
@@ -319,7 +319,7 @@
                     height="106.62"
                     transform="rotate(-12.38,311.10575,204.73524)"
                     id="rect273"
-                    style="fill:url(#D%C3%A9grad%C3%A9_sans_nom_5)"/>
+                    style="fill:url(#Gradient5)"/>
         </g>
         <g
                 class="st33"
@@ -334,7 +334,7 @@
                     height="67.800003"
                     transform="rotate(-12.38,307.37213,227.97831)"
                     id="rect274"
-                    style="fill:url(#D%C3%A9grad%C3%A9_sans_nom_6)"/>
+                    style="fill:url(#Gradient6)"/>
         </g>
         <g
                 class="st42"
@@ -349,7 +349,7 @@
                     height="43.580002"
                     transform="rotate(-12.38,304.63122,245.07887)"
                     id="rect275"
-                    style="fill:url(#D%C3%A9grad%C3%A9_sans_nom_7)"/>
+                    style="fill:url(#Gradient7)"/>
         </g>
     </g>
 </svg>
