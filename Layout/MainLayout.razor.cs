@@ -13,10 +13,12 @@ public partial class MainLayout
     private bool _isThemeInitialized;
 
     public const string DatabasesSectionId = "databases-title";
+    public const string MapWorkingAreaSectionId = "mapworkingarea-title";
 
     private readonly List<AnchorSection> _sections =
     [
-        new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage }
+        new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage },
+        new() { Id = MapWorkingAreaSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Material.Filled.Map },
     ];
 
     protected override void OnInitialized()

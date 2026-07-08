@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TheR7angelo.github.io.Resources.Resx.HomePage {
+namespace TheR7angelo.github.io.Resources.Resx.MapWorkingAreaSection {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class HomePageResources {
+    internal class MapWorkingAreaSectionResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal HomePageResources() {
+        internal MapWorkingAreaSectionResources() {
         }
         
         /// <summary>
@@ -38,7 +38,8 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TheR7angelo.github.io.Resources.Resx.HomePage.HomePageResources", typeof(HomePageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager(("TheR7angelo.github.io.Resources.Resx.MapWorkingAreaSection.MapWorkingAreaSectionR" +
+                            "esources"), typeof(MapWorkingAreaSectionResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,65 +61,11 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ⚡ Database Architecture &amp; Optimization.
+        ///   Looks up a localized string similar to 🚶‍➡️Explore my journey interactively. Click on the map to discover the details of my experiences..
         /// </summary>
-        internal static string DatabasesSectionTitle {
+        internal static string MyExplore {
             get {
-                return ResourceManager.GetString("DatabasesSectionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Navigation.
-        /// </summary>
-        internal static string MainLayoutDrawerTitle {
-            get {
-                return ResourceManager.GetString("MainLayoutDrawerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Building robust applications and optimizing data performance.
-        /// </summary>
-        internal static string MainLayoutSubTitle {
-            get {
-                return ResourceManager.GetString("MainLayoutSubTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Full Stack.
-        /// </summary>
-        internal static string MainLayoutTitle1 {
-            get {
-                return ResourceManager.GetString("MainLayoutTitle1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .NET Developer.
-        /// </summary>
-        internal static string MainLayoutTitle2 {
-            get {
-                return ResourceManager.GetString("MainLayoutTitle2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏡My Anchor Points.
-        /// </summary>
-        internal static string MapWorkingAreaSectionTitle {
-            get {
-                return ResourceManager.GetString("MapWorkingAreaSectionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Portfolio.
-        /// </summary>
-        internal static string NavBarTitle {
-            get {
-                return ResourceManager.GetString("NavBarTitle", resourceCulture);
+                return ResourceManager.GetString("MyExplore", resourceCulture);
             }
         }
     }
