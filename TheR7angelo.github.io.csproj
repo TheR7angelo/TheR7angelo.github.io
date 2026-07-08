@@ -51,6 +51,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapWorkingAreaSectionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Remove="Resources\Data\Assets\IneoInfracom.svg" />
+    <EmbeddedResource Include="Resources\Data\Assets\IneoInfracom.svg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -153,12 +153,25 @@ public partial class MapWorkingAreaSection
 
                 var mapsuiFeature = new GeometryFeature(geometry);
 
+                string? icon = null;
                 if (ntsFeature.Attributes is not null)
                 {
                     foreach (var attributeName in ntsFeature.Attributes.GetNames())
                     {
                         mapsuiFeature[attributeName] = ntsFeature.Attributes[attributeName];
+                        if (attributeName is "icon") icon = ntsFeature.Attributes[attributeName].ToString();
                     }
+                }
+
+                if (!string.IsNullOrWhiteSpace(icon))
+                {
+                    var featureStyle = new ImageStyle
+                    {
+                        Image = $"embedded://TheR7angelo.github.io.Resources.Data.Assets.{icon}",
+                        SymbolScale = 0.5,
+                        Offset = new Offset(0, 75)
+                    };
+                    mapsuiFeature.Styles.Add(featureStyle);
                 }
 
                 mapsuiFeatures.Add(mapsuiFeature);
