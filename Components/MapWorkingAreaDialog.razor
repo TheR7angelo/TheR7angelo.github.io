@@ -14,7 +14,7 @@
                 <tbody>
                 @foreach (var key in Feature.Fields)
                 {
-                    if (key is "name") continue;
+                    if (key is "name" or "icon") continue;
 
                     var value = Feature[key]?.ToString() ?? string.Empty;
 
