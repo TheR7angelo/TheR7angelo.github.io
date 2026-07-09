@@ -8,6 +8,7 @@ using Mapsui.UI.Blazor;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using TheR7angelo.github.io.Pages;
 using Color = Mapsui.Styles.Color;
@@ -15,29 +16,114 @@ using IFeature = Mapsui.IFeature;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class MapWorkingAreaSection
+public partial class MapWorkingAreaSection : IDisposable
 {
+    private const string CityBoundaryResourceName = "TheR7angelo.github.io.Resources.Data.city_boundary.geojson";
+    private const string CompanySiteResourceName = "TheR7angelo.github.io.Resources.Data.company_site.geojson";
+
+    private const string CityBoundaryLayerName = "City Boundary";
+    private const string CompanySiteLayerName = "Company Site";
+
+    private const string IconAttributeName = "icon";
+    private const string EmbeddedAssetPrefix = "embedded://TheR7angelo.github.io.Resources.Data.Assets.";
+
+    private const double ExtentMarginRatio = 0.1;
+
+    private const double DefaultCompanySiteSymbolScale = 0.8;
+    private const double DefaultIconScale = 0.5;
+
+    private const double CompanySiteMaxVisible = 200;
+
+    private const double IconMaxVisible = 200;
+
+    private static readonly Offset DefaultIconOffset = new(0, 75);
+
+    private readonly List<ILayer> _layers = [];
+
+    private MapControl? _mapControl;
+    private bool _isMapInitialized;
+
     [Inject]
     private ILogger<Home> Logger { get; set; } = null!;
 
     [Inject]
     private IDialogService DialogService { get; set; } = null!;
 
-    private MapControl? _mapControl;
-
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
 
-        if (!firstRender) return;
-        _mapControl?.Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
+        if (!firstRender || _mapControl is null || _isMapInitialized)
+        {
+            return;
+        }
 
-        if (_mapControl is not null) _mapControl.Map.Info += MapOnInfo;
+        InitializeMap();
+        _isMapInitialized = true;
+    }
 
-        const string cityBoundaryGeojson = "TheR7angelo.github.io.Resources.Data.city_boundary.geojson";
-        const string companySiteGeojson = "TheR7angelo.github.io.Resources.Data.company_site.geojson";
+    private void InitializeMap()
+    {
+        AddBaseMapLayer();
+        RegisterMapEvents();
+        LoadWorkingAreaLayers();
 
-        var cityBoundaryStyle = new VectorStyle
+        if (_layers.Count is 0)
+        {
+            Logger.LogWarning("No GIS layers were loaded");
+            return;
+        }
+
+        _mapControl!.Map.Layers.Add(_layers);
+
+        ZoomToLayersExtent();
+    }
+
+    private void AddBaseMapLayer()
+    {
+        _mapControl!.Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
+    }
+
+    private void RegisterMapEvents()
+    {
+        _mapControl!.Map.Info += MapOnInfo;
+    }
+
+    private void LoadWorkingAreaLayers()
+    {
+        AddLayerIfAvailable(CreateCityBoundaryLayer());
+        AddLayerIfAvailable(CreateCompanySiteLayer());
+    }
+
+    private ILayer? CreateCityBoundaryLayer()
+    {
+        return CreateLayerFromEmbeddedGeoJson(
+            CityBoundaryResourceName,
+            CityBoundaryLayerName,
+            CreateCityBoundaryStyle());
+    }
+
+    private ILayer? CreateCompanySiteLayer()
+    {
+        return CreateLayerFromEmbeddedGeoJson(
+            CompanySiteResourceName,
+            CompanySiteLayerName,
+            CreateCompanySiteStyle());
+    }
+
+    private void AddLayerIfAvailable(ILayer? layer)
+    {
+        if (layer is null)
+        {
+            return;
+        }
+
+        _layers.Add(layer);
+    }
+
+    private static VectorStyle CreateCityBoundaryStyle()
+    {
+        return new VectorStyle
         {
             Fill = new Brush(Color.FromArgb(127, 63, 81, 181)),
             Line = new Pen
@@ -46,141 +132,241 @@ public partial class MapWorkingAreaSection
                 Width = 2
             }
         };
+    }
 
-        var companySiteStyle = new SymbolStyle
+    private static SymbolStyle CreateCompanySiteStyle()
+    {
+        return new SymbolStyle
         {
-            SymbolType = SymbolType.Ellipse,
-            SymbolScale = 0.8,
+            SymbolType = SymbolType.Triangle,
+            SymbolScale = DefaultCompanySiteSymbolScale,
             Fill = new Brush(Color.FromArgb(127, 255, 87, 34)),
             Line = new Pen
             {
                 Color = Color.FromArgb(255, 255, 255, 255),
                 Width = 2
             },
-            MaxVisible = 2000
+            SymbolRotation = 180,
+            MaxVisible = CompanySiteMaxVisible
         };
-
-        var layerCityBoundary = CreateLayerFromEmbeddedGeoJson(cityBoundaryGeojson, "City Boundary", cityBoundaryStyle, Logger);
-        var layerCompanySite = CreateLayerFromEmbeddedGeoJson(companySiteGeojson, "Company Site", companySiteStyle, Logger);
-
-        if (layerCityBoundary is not null) Layers.Add(layerCityBoundary);
-        if (layerCompanySite is not null) Layers.Add(layerCompanySite);
-
-        _mapControl?.Map.Layers.Add(Layers);
-
-        var globalExtent = Layers.Select(layer => layer.Extent)
-            .OfType<MRect>()
-            .Aggregate<MRect?, MRect?>(null, (current, layerExtent) => current is null
-                ? layerExtent
-                : current.Join(layerExtent));
-
-        if (globalExtent is null) return;
-        var marginX = globalExtent.Width * 0.1;
-        var marginY = globalExtent.Height * 0.1;
-
-        var extentWithMargin = globalExtent.Grow(marginX, marginY);
-
-        _mapControl?.Map.Navigator.ZoomToBox(extentWithMargin);
     }
 
-    private List<ILayer> Layers { get; } = [];
+    private void ZoomToLayersExtent()
+    {
+        var extent = GetGlobalLayersExtent();
+
+        if (extent is null)
+        {
+            Logger.LogWarning("Unable to zoom to layers extent because no valid extent was found");
+            return;
+        }
+
+        var extentWithMargin = AddMarginToExtent(extent);
+
+        _mapControl!.Map.Navigator.ZoomToBox(extentWithMargin);
+    }
+
+    private MRect? GetGlobalLayersExtent()
+    {
+        return _layers
+            .Select(layer => layer.Extent)
+            .OfType<MRect>()
+            .Aggregate<MRect?, MRect?>(
+                null,
+                static (current, extent) => current is null
+                    ? extent
+                    : current.Join(extent));
+    }
+
+    private static MRect AddMarginToExtent(MRect extent)
+    {
+        var marginX = extent.Width * ExtentMarginRatio;
+        var marginY = extent.Height * ExtentMarginRatio;
+
+        return extent.Grow(marginX, marginY);
+    }
 
     private void MapOnInfo(object? sender, MapInfoEventArgs e)
     {
-        var mapInfo = e.GetMapInfo(Layers);
-        if (mapInfo.Feature is null) return;
+        var mapInfo = e.GetMapInfo(_layers);
 
-        ShowFeatureInfoDialogAsync(mapInfo.Feature);
+        if (mapInfo.Feature is null)
+        {
+            return;
+        }
+
+        ShowFeatureInfoDialog(mapInfo.Feature);
     }
 
-    private void ShowFeatureInfoDialogAsync(IFeature feature)
+    private void ShowFeatureInfoDialog(IFeature feature)
     {
         var parameters = new DialogParameters<MapWorkingAreaDialog>
         {
-            { x => x.Feature, feature }
+            { dialog => dialog.Feature, feature }
         };
 
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-        DialogService.ShowAsync<MapWorkingAreaDialog>(string.Empty, parameters, options);
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        _ = DialogService.ShowAsync<MapWorkingAreaDialog>(
+            title: string.Empty,
+            parameters,
+            options);
     }
 
     private GenericCollectionLayer<List<IFeature>>? CreateLayerFromEmbeddedGeoJson(
         string resourceName,
         string layerName,
-        IStyle? layerStyle = null,
-        ILogger? logger = null)
+        IStyle? layerStyle = null)
     {
-        logger?.LogInformation("Starting to load GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
-            layerName, resourceName);
+        Logger.LogInformation(
+            "Loading GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
+            layerName,
+            resourceName);
 
         try
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-
-            if (stream is null)
-            {
-                var fileNotFoundEx = new FileNotFoundException($"Embedded resource not found: {resourceName}");
-                logger?.LogError(fileNotFoundEx,
-                    "Failed to locate embedded resource '{ResourceName}' for layer '{LayerName}'", resourceName,
-                    layerName);
-                throw fileNotFoundEx;
-            }
-
-            using var reader = new StreamReader(stream);
-            var geoJsonString = reader.ReadToEnd();
-
-            var geoJsonReader = new GeoJsonReader();
-            var featureCollection = geoJsonReader.Read<FeatureCollection>(geoJsonString);
+            var geoJson = ReadEmbeddedResource(resourceName);
+            var featureCollection = ReadFeatureCollection(geoJson);
 
             if (featureCollection is null || featureCollection.Count is 0)
             {
-                logger?.LogWarning("The GeoJSON resource '{ResourceName}' yielded no features for layer '{LayerName}'",
-                    resourceName, layerName);
+                Logger.LogWarning(
+                    "GeoJSON resource '{ResourceName}' contains no features for layer '{LayerName}'",
+                    resourceName,
+                    layerName);
+
                 return null;
             }
 
-            var mapsuiFeatures = new List<IFeature>();
-            foreach (var ntsFeature in featureCollection)
-            {
-                var geometry = ntsFeature.Geometry;
-                geometry.Apply(new NetTopologySuite.Geometries.CoordinateFilter(c =>
-                {
-                    var projectedPoint = SphericalMercator.FromLonLat(c.X, c.Y);
-                    c.X = projectedPoint.x;
-                    c.Y = projectedPoint.y;
-                }));
+            var features = featureCollection
+                .Select(ConvertToMapsuiFeature)
+                .ToList();
 
-                var mapsuiFeature = new GeometryFeature(geometry);
+            Logger.LogInformation(
+                "Successfully created GIS layer '{LayerName}' with {FeatureCount} features",
+                layerName,
+                features.Count);
 
-                if (ntsFeature.Attributes is not null)
-                {
-                    foreach (var attributeName in ntsFeature.Attributes.GetNames())
-                    {
-                        mapsuiFeature[attributeName] = ntsFeature.Attributes[attributeName];
-                    }
-                }
-
-                mapsuiFeatures.Add(mapsuiFeature);
-            }
-
-            var layer = new GenericCollectionLayer<List<IFeature>>
+            return new GenericCollectionLayer<List<IFeature>>
             {
                 Name = layerName,
-                Features = mapsuiFeatures,
+                Features = features,
                 Style = layerStyle
             };
-
-            logger?.LogInformation("Successfully created GIS layer '{LayerName}' with {FeatureCount} features",
-                layerName, mapsuiFeatures.Count);
-            return layer;
         }
         catch (Exception ex)
         {
-            logger?.LogError(ex,
-                "An unhandled exception occurred while generating GIS layer '{LayerName}' from resource '{ResourceName}'",
-                layerName, resourceName);
+            Logger.LogError(
+                ex,
+                "Failed to create GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
+                layerName,
+                resourceName);
+
             throw;
         }
+    }
+
+    private static string ReadEmbeddedResource(string resourceName)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+
+        if (stream is null)
+        {
+            throw new FileNotFoundException(
+                $"Embedded resource not found: {resourceName}",
+                resourceName);
+        }
+
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
+
+    private static FeatureCollection? ReadFeatureCollection(string geoJson)
+    {
+        var reader = new GeoJsonReader();
+
+        return reader.Read<FeatureCollection>(geoJson);
+    }
+
+    private static IFeature ConvertToMapsuiFeature(NetTopologySuite.Features.IFeature ntsFeature)
+    {
+        var geometry = ProjectToWebMercator(ntsFeature.Geometry);
+        var mapsuiFeature = new GeometryFeature(geometry);
+
+        var icon = CopyAttributes(ntsFeature, mapsuiFeature);
+
+        if (!string.IsNullOrWhiteSpace(icon))
+        {
+            mapsuiFeature.Styles.Add(CreateIconStyle(icon));
+        }
+
+        return mapsuiFeature;
+    }
+
+    private static Geometry ProjectToWebMercator(Geometry geometry)
+    {
+        var projectedGeometry = geometry.Copy();
+
+        projectedGeometry.Apply(new CoordinateFilter(coordinate =>
+        {
+            var projectedPoint = SphericalMercator.FromLonLat(
+                coordinate.X,
+                coordinate.Y);
+
+            coordinate.X = projectedPoint.x;
+            coordinate.Y = projectedPoint.y;
+        }));
+
+        return projectedGeometry;
+    }
+
+    private static string? CopyAttributes(
+        NetTopologySuite.Features.IFeature sourceFeature,
+        IFeature targetFeature)
+    {
+        if (sourceFeature.Attributes is null)
+        {
+            return null;
+        }
+
+        string? icon = null;
+
+        foreach (var attributeName in sourceFeature.Attributes.GetNames())
+        {
+            var value = sourceFeature.Attributes[attributeName];
+
+            targetFeature[attributeName] = value;
+
+            if (string.Equals(attributeName, IconAttributeName, StringComparison.OrdinalIgnoreCase))
+            {
+                icon = value?.ToString();
+            }
+        }
+
+        return icon;
+    }
+
+    private static ImageStyle CreateIconStyle(string icon)
+    {
+        return new ImageStyle
+        {
+            Image = $"{EmbeddedAssetPrefix}{icon}",
+            SymbolScale = DefaultIconScale,
+            Offset = DefaultIconOffset,
+            MaxVisible = IconMaxVisible
+        };
+    }
+
+    public void Dispose()
+    {
+        _mapControl?.Map.Info -= MapOnInfo;
+        GC.SuppressFinalize(this);
     }
 }
