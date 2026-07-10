@@ -84,4 +84,11 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TheR7angelo.github.io.Domain\TheR7angelo.github.io.Domain.csproj" />
+    <ProjectReference Include="..\TheR7angelo.github.io.Infrastructure\TheR7angelo.github.io.Infrastructure.csproj" />
+    <ProjectReference Include="..\TheR7angelo.github.io.Presentation\TheR7angelo.github.io.Presentation.csproj" />
+    <ProjectReference Include="..\TheR7angelo.github.io.Service\TheR7angelo.github.io.Service.csproj" />
+  </ItemGroup>
+
 </Project>
