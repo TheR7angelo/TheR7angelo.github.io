@@ -1,0 +1,11 @@
+﻿### Lists languages for the specified repository. The value shown for each language is the number of bytes of code written in that language.
+https://api.github.com/repos/ther7angelo/myexpenses/languages
+###
+
+### Get all repository topics
+https://api.github.com/repos/ther7angelo/myexpenses/topics
+###
+
+### Lists public repositories for the specified user
+https://api.github.com/users/ther7angelo/repos
+###
