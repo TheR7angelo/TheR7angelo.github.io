@@ -19,11 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include=".github\workflows\deploy.yml" />
+    <Content Include="..\.github\workflows\deploy.yml">
+      <Link>.github\workflows\deploy.yml</Link>
+    </Content>
+    <Content Include="..\.gitignore">
+      <Link>.gitignore</Link>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

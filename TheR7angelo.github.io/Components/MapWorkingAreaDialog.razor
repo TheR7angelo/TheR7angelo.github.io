@@ -25,12 +25,10 @@
                         <td style="padding: 8px 0 8px 12px; color: var(--mud-palette-text-primary);">
                             @if (value.StartsWith("http://") || value.StartsWith("https://"))
                             {
-                                <MudLink Variant="Variant.Text"
-                                         Color="Color.Info"
+                                <MudLink Color="Color.Info"
                                          EndIcon="@Icons.Material.Filled.Launch"
                                          Href="@value"
                                          Target="_blank"
-                                         Size="Size.Small"
                                          Style="text-transform: none; padding: 0;">
                                     @value
                                 </MudLink>
