@@ -2,6 +2,10 @@
 https://api.github.com/repos/ther7angelo/myexpenses/languages
 ###
 
+### Get badge language
+https://img.shields.io/badge/C%23-55%25-239120?style=flat&logo=csharp&color=7355dd
+###
+
 ### Get all repository topics
 https://api.github.com/repos/ther7angelo/myexpenses/topics
 ###
@@ -18,3 +22,11 @@ https://api.github.com/repos/ther7angelo/myexpenses/contents/.github/Assets
 ###
 
 https://raw.githubusercontent.com/TheR7angelo/MyExpenses/master/.github/Assets/Icon.svg
+
+### Get offical color language from github yml file
+https://raw.githubusercontent.com/github-linguist/linguist/master/lib/linguist/languages.yml
+###
+
+### try getting readme in html format
+https://api.github.com/repos/TheR7angelo/MyExpenses/readme
+Accept: application/vnd.github.html
