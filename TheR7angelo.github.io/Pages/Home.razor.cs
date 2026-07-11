@@ -8,10 +8,20 @@ public partial class Home(IGithubService githubService, ILogger<Home> logger)
     {
         base.OnAfterRender(firstRender);
 
-        _ = Task.Run(async () =>
+        _ = GetAllGithubRepository();
+    }
+
+    private async Task GetAllGithubRepository()
+    {
+        var resultGithubRepositories = await githubService.GetAllGithubRepository();
+        if (!resultGithubRepositories.IsSuccess)
         {
-            var result = await githubService.GetAllGithubRepository();
-            logger.LogInformation(@"{Result}", result);
-        });
+            logger.LogError("Failed to retrieve GitHub repositories");
+            return;
+        }
+
+        var result = await githubService.GetAllGithubRepositoryInformation(resultGithubRepositories.Value!);
+
+        Console.WriteLine(result.Value?.Count());
     }
 }

@@ -14,4 +14,11 @@ public class GithubService(IGithubRepository githubRepository,
         var result = await githubRepository.GetAllGithubRepository(cancellationToken);
         return result.MapSequence(githubDomainToGithubDto.MapToDto);
     }
+
+    public async Task<Result<IEnumerable<GithubRepositoryInformationDto>>> GetAllGithubRepositoryInformation(IEnumerable<GithubRepositoryDto> githubRepositoryDtos, CancellationToken cancellationToken = default)
+    {
+        var domains = githubRepositoryDtos.Select(githubDomainToGithubDto.MapToDomain);
+        var result = await githubRepository.GetAllGithubRepositoryInformation(domains, cancellationToken);
+        return result.MapSequence(githubDomainToGithubDto.MapToDto);
+    }
 }

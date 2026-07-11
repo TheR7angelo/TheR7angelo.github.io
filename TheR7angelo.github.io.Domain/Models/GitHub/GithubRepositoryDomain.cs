@@ -46,7 +46,7 @@ public sealed class GithubRepositoryDomain
 
     public DateTime PushedAt { get; set; }
 
-    public GithubOwnerDomain OwnerDomain { get; set; } = new();
+    public GithubOwnerDomain? OwnerDomain { get; set; }
 
     public GithubLicenseDomain? LicenseDomain { get; set; }
 }

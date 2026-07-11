@@ -10,4 +10,12 @@ public interface IGithubDomainToGithubDto
     public GithubOwnerDto MapToDto(GithubOwnerDomain entity);
 
     public GithubLicenseDto MapToDto(GithubLicenseDomain entity);
+
+    public GithubRepositoryDomain MapToDomain(GithubRepositoryDto entity);
+
+    public GithubOwnerDomain MapToDomain(GithubOwnerDto entity);
+
+    public GithubLicenseDomain MapToDomain(GithubLicenseDto entity);
+
+    public GithubRepositoryInformationDto MapToDto(GithubRepositoryInformationDomain entity);
 }
