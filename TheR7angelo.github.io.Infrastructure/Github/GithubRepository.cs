@@ -65,7 +65,31 @@ public class GithubRepository(
 
         try
         {
-            using var response = await httpClient.GetAsync("/users/TheR7angelo/repos", cancellationToken);
+            var request = new HttpRequestMessage(HttpMethod.Get, "/users/TheR7angelo/repos");
+            using var response = await httpClient.SendAsync(request, cancellationToken);
+
+            if (response.StatusCode == HttpStatusCode.Forbidden) // Erreur 403 Rate Limit
+            {
+                if (!response.Headers.TryGetValues("x-ratelimit-reset", out var values))
+                {
+                    return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.Http,
+                        "GitHub API quota exceeded or denied access (403)");
+                }
+
+                var rawUnixTime = values.FirstOrDefault();
+                if (!long.TryParse(rawUnixTime, out var unixSeconds))
+                {
+                    return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.Http,
+                        "GitHub API quota exceeded or denied access (403)");
+                }
+
+                var resetDateTime = DateTimeOffset.FromUnixTimeSeconds(unixSeconds).LocalDateTime;
+                var msgRateLimit = $"GitHub API quota exceeded. Scheduled reset to {resetDateTime.ToShortTimeString()}";
+
+                logger.LogWarning("{MsgRateLimit}", msgRateLimit);
+                return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.Http, msgRateLimit);
+
+            }
 
             if (!response.IsSuccessStatusCode)
             {
