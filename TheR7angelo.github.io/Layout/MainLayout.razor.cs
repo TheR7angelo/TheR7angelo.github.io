@@ -14,11 +14,13 @@ public partial class MainLayout
 
     public const string DatabasesSectionId = "databases-title";
     public const string MapWorkingAreaSectionId = "mapworkingarea-title";
+    public const string GithubRepoSectionId = "githubrepo-title";
 
     private readonly List<AnchorSection> _sections =
     [
         new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage },
         new() { Id = MapWorkingAreaSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Material.Filled.Map },
+        new() { Id = GithubRepoSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Custom.Brands.GitHub },
     ];
 
     protected override void OnInitialized()
