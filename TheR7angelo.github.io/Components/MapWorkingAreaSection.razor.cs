@@ -5,7 +5,6 @@ using Mapsui.Nts;
 using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.UI.Blazor;
-using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
@@ -16,7 +15,7 @@ using IFeature = Mapsui.IFeature;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class MapWorkingAreaSection : IDisposable
+public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService dialogService) : IDisposable
 {
     private const string CityBoundaryResourceName = "TheR7angelo.github.io.Resources.Data.city_boundary.geojson";
     private const string CompanySiteResourceName = "TheR7angelo.github.io.Resources.Data.company_site.geojson";
@@ -43,23 +42,27 @@ public partial class MapWorkingAreaSection : IDisposable
     private MapControl? _mapControl;
     private bool _isMapInitialized;
 
-    [Inject]
-    private ILogger<Home> Logger { get; set; } = null!;
-
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        base.OnAfterRender(firstRender);
+        await base.OnAfterRenderAsync(firstRender);
 
-        if (!firstRender || _mapControl is null || _isMapInitialized)
-        {
-            return;
-        }
+        if (_isMapInitialized)  return;
 
-        InitializeMap();
+        if (_mapControl is null) return;
+
         _isMapInitialized = true;
+
+        try
+        {
+            InitializeMap();
+
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "An error occur");
+            _isMapInitialized = false;
+        }
     }
 
     private void InitializeMap()
@@ -70,7 +73,7 @@ public partial class MapWorkingAreaSection : IDisposable
 
         if (_layers.Count is 0)
         {
-            Logger.LogWarning("No GIS layers were loaded");
+            logger.LogWarning("No GIS layers were loaded");
             return;
         }
 
@@ -157,7 +160,7 @@ public partial class MapWorkingAreaSection : IDisposable
 
         if (extent is null)
         {
-            Logger.LogWarning("Unable to zoom to layers extent because no valid extent was found");
+            logger.LogWarning("Unable to zoom to layers extent because no valid extent was found");
             return;
         }
 
@@ -212,7 +215,7 @@ public partial class MapWorkingAreaSection : IDisposable
             FullWidth = true
         };
 
-        _ = DialogService.ShowAsync<MapWorkingAreaDialog>(
+        _ = dialogService.ShowAsync<MapWorkingAreaDialog>(
             title: string.Empty,
             parameters,
             options);
@@ -223,7 +226,7 @@ public partial class MapWorkingAreaSection : IDisposable
         string layerName,
         IStyle? layerStyle = null)
     {
-        Logger.LogInformation(
+        logger.LogInformation(
             "Loading GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
             layerName,
             resourceName);
@@ -235,7 +238,7 @@ public partial class MapWorkingAreaSection : IDisposable
 
             if (featureCollection is null || featureCollection.Count is 0)
             {
-                Logger.LogWarning(
+                logger.LogWarning(
                     "GeoJSON resource '{ResourceName}' contains no features for layer '{LayerName}'",
                     resourceName,
                     layerName);
@@ -247,7 +250,7 @@ public partial class MapWorkingAreaSection : IDisposable
                 .Select(ConvertToMapsuiFeature)
                 .ToList();
 
-            Logger.LogInformation(
+            logger.LogInformation(
                 "Successfully created GIS layer '{LayerName}' with {FeatureCount} features",
                 layerName,
                 features.Count);
@@ -261,7 +264,7 @@ public partial class MapWorkingAreaSection : IDisposable
         }
         catch (Exception ex)
         {
-            Logger.LogError(
+            logger.LogError(
                 ex,
                 "Failed to create GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
                 layerName,
