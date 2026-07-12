@@ -1,20 +1,15 @@
-﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
+﻿using MudBlazor;
 using TheR7angelo.github.io.Resources.Resx.DatabaseProject;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class DatabaseSection
+public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogService dialogService)
 {
-    [Inject] private IDialogService DialogService { get; set; } = null!;
-
-    [Inject] private ILogger<DatabaseSection> Logger { get; set; } = null!;
-
     private List<DataBaseTechnology> DataBaseTechnologies { get; } = [];
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
         FillProjets();
     }
@@ -71,7 +66,7 @@ public partial class DatabaseSection
 
     private Task NavigateToDatabase(DataBaseTechnology tech)
     {
-        Logger.LogInformation("Opening project dialog for {DbName}...", tech.Name);
+        logger.LogInformation("Opening project dialog for {DbName}...", tech.Name);
 
         var parameters = new DialogParameters
         {
@@ -81,7 +76,7 @@ public partial class DatabaseSection
 
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
 
-        return DialogService.ShowAsync<DatabaseProjectDialog>($"Détails {tech.Name}", parameters, options);
+        return dialogService.ShowAsync<DatabaseProjectDialog>($"Détails {tech.Name}", parameters, options);
     }
 }
 
