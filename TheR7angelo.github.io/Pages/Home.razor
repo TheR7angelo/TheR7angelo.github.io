@@ -15,3 +15,33 @@
     <MapWorkingAreaSection />
 
 </MudPaper>
+
+<MudGrid Justify="Justify.Center">
+
+    @if (IsLoading)
+    {
+        <MudItem xs="12" Class="my-4">
+            <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Medium" />
+        </MudItem>
+    }
+    else
+    {
+        @foreach (var githubRepositoryInformationDto in GithubRepositoryInformationDtos)
+        {
+            <MudItem xs="12" md="4">
+                <MudCard Elevation="2"
+                         Class="pa-4 hover:mud-elevation-5"
+                         Style="cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                         onmouseover="this.style.transform='translateY(-10px)'"
+                         onmouseout="this.style.transform='translateY(0)'">
+
+                    <MudCardContent Class="d-flex flex-column align-center">
+                        <MudImage Src="@githubRepositoryInformationDto.LogoUrl" Alt="@($"{githubRepositoryInformationDto.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
+                        <MudText Typo="Typo.h6">@githubRepositoryInformationDto.Name</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    }
+
+</MudGrid>
