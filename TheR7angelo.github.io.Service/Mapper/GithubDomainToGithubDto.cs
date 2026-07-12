@@ -25,4 +25,6 @@ public partial class GithubDomainToGithubDto : IGithubDomainToGithubDto
     public partial GithubLicenseDomain MapToDomain(GithubLicenseDto entity);
 
     public partial GithubRepositoryInformationDto MapToDto(GithubRepositoryInformationDomain entity);
+
+    public partial GithubBadgeDto MapToDto(GithubBadgeDomain entity);
 }

@@ -4,5 +4,6 @@ public enum ErrorCode
 {
     None,
 
-    Http
+    Http,
+    GithubRateLimited
 }

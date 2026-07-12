@@ -24,6 +24,11 @@ public class GithubRepository(
 
     private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(2);
 
+    /// <summary>
+    /// Initializes the repository by fetching language metadata from GitHub Linguist.
+    /// This method is called once to set up the necessary data for other operations.
+    /// <strong>GitHub API Token Cost:</strong> 0 tokens (Uses raw.githubusercontent.com, which does not count against the API rate limit).
+    /// </summary>
     public async Task InitializeAsync()
     {
         if (LanguageMetadatas is not null) return;
@@ -49,7 +54,14 @@ public class GithubRepository(
         }
     }
 
-    public async Task<Result<IEnumerable<GithubRepositoryDomain>>> GetAllGithubRepository(CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Retrieves all GitHub repositories.
+    /// <strong>GitHub API Token Cost:</strong> 1 token per execution (0 if cache hit).
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A result containing the list of GitHub repository domains or an error if the operation fails.</returns>
+    public async Task<Result<IEnumerable<GithubRepositoryDomain>>> GetAllGithubRepository(
+        CancellationToken cancellationToken = default)
     {
         const string cacheKey = "github_all_repositories";
 
@@ -79,7 +91,7 @@ public class GithubRepository(
                 var rawUnixTime = values.FirstOrDefault();
                 if (!long.TryParse(rawUnixTime, out var unixSeconds))
                 {
-                    return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.Http,
+                    return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.GithubRateLimited,
                         "GitHub API quota exceeded or denied access (403)");
                 }
 
@@ -87,8 +99,7 @@ public class GithubRepository(
                 var msgRateLimit = $"GitHub API quota exceeded. Scheduled reset to {resetDateTime.ToShortTimeString()}";
 
                 logger.LogWarning("{MsgRateLimit}", msgRateLimit);
-                return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.Http, msgRateLimit);
-
+                return Result<IEnumerable<GithubRepositoryDomain>>.Failure(ErrorCode.GithubRateLimited, msgRateLimit);
             }
 
             if (!response.IsSuccessStatusCode)
@@ -114,6 +125,13 @@ public class GithubRepository(
         }
     }
 
+    /// <summary>
+    /// Retrieves detailed information for a list of GitHub repositories.
+    /// <strong>GitHub API Token Cost:</strong> 3 * N tokens where N is the number of processed repositories (0 for individual assets if cache hit).
+    /// </summary>
+    /// <param name="domains">A collection of GitHub repository domains.</param>
+    /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+    /// <returns>A result containing either a collection of GitHub repository information domains or an error.</returns>
     public async Task<Result<IEnumerable<GithubRepositoryInformationDomain>>> GetAllGithubRepositoryInformation(
         IEnumerable<GithubRepositoryDomain> domains,
         CancellationToken cancellationToken = default)
@@ -149,6 +167,7 @@ public class GithubRepository(
 
                 results.Add(new GithubRepositoryInformationDomain
                 {
+                    RepositoryUrl = domain.HtmlUrl,
                     Name = repo,
                     Description = domain.Description,
                     LogoUrl = await getCustomLogoUrlAsyncTask,
@@ -171,7 +190,17 @@ public class GithubRepository(
         }
     }
 
-    private async Task<string?> GetReadmeHtmlAsync(string owner, string repoName, string defaultBranch, CancellationToken cancellationToken)
+    /// <summary>
+    /// Retrieves the HTML content of a repository's README file from GitHub.
+    /// <strong>GitHub API Token Cost:</strong> 1 token per repository (0 if cache hit).
+    /// </summary>
+    /// <param name="owner">The owner of the repository.</param>
+    /// <param name="repoName">The name of the repository.</param>
+    /// <param name="defaultBranch">The default branch of the repository.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The result is a string containing the HTML content of the README file, or null if an error occurs.</returns>
+    private async Task<string?> GetReadmeHtmlAsync(string owner, string repoName, string defaultBranch,
+        CancellationToken cancellationToken)
     {
         var cacheKey = $"readme_{owner}_{repoName}";
 
@@ -226,7 +255,17 @@ public class GithubRepository(
         }
     }
 
-    private async Task<string> GetCustomLogoUrlAsync(string owner, string repoName, string defaultBranch, CancellationToken cancellationToken)
+    /// <summary>
+    /// Retrieves the URL of a custom logo for a specified GitHub repository.
+    /// <strong>GitHub API Token Cost:</strong> 1 token per repository (0 if cache hit).
+    /// </summary>
+    /// <param name="owner">The owner of the GitHub repository.</param>
+    /// <param name="repoName">The name of the GitHub repository.</param>
+    /// <param name="defaultBranch">The default branch of the repository.</param>
+    /// <param name="cancellationToken">A cancellation token to allow for asynchronous operation cancellation.</param>
+    /// <returns>A task that represents the asynchronous operation and returns a string representing the URL of the custom logo.</returns>
+    private async Task<string> GetCustomLogoUrlAsync(string owner, string repoName, string defaultBranch,
+        CancellationToken cancellationToken)
     {
         var cacheKey = $"logo_{owner}_{repoName}";
 
@@ -300,35 +339,75 @@ public class GithubRepository(
         return fileName.Equals("icon.png", StringComparison.OrdinalIgnoreCase) ? 4 : 99;
     }
 
-    private Task<List<string>> CreateStatsBadges(int stargazersCount, int subscribersCount, int forksCount,
-        DateTime pushedAt, int repoSizeCount, int openIssuesCount, string? licenceName)
+    /// <summary>
+    /// Creates a list of badges for repository statistics.
+    /// <strong>GitHub API Token Cost:</strong> 0 tokens (Calculated entirely on client-side using metadata).
+    /// </summary>
+    /// <param name="stargazersCount">Number of stargazers on the repository.</param>
+    /// <param name="subscribersCount">Number of subscribers to the repository.</param>
+    /// <param name="forksCount">Number of forks of the repository.</param>
+    /// <param name="pushedAt">The last commit date of the repository.</param>
+    /// <param name="repoSizeCount">Size of the repository in bytes.</param>
+    /// <param name="openIssuesCount">Number of open issues in the repository.</param>
+    /// <param name="licenceName">License under which the repository is published.</param>
+    /// <returns>A list of URLs for repository statistics badges.</returns>
+private Task<List<GithubBadgeDomain>> CreateStatsBadges(int stargazersCount, int subscribersCount, int forksCount,
+    DateTime pushedAt, int repoSizeCount, int openIssuesCount, string? licenceName)
+{
+    var starsUrl = $"https://img.shields.io/badge/Stars-{stargazersCount}-gold?style=flat&logo=github-sponsors&logoColor=white";
+    var starsAlt = $"GitHub Stars: {stargazersCount}";
+
+    var watchersUrl = $"https://img.shields.io/badge/Watchers-{subscribersCount}-4183C4?style=flat&logo=visibility&logoColor=white";
+    var watchersAlt = $"Watchers: {subscribersCount}";
+
+    var forksUrl = $"https://img.shields.io/badge/Forks-{forksCount}-586069?style=flat&logo=git-fork&logoColor=white";
+    var forksAlt = $"Forks: {forksCount}";
+
+    var dateText = pushedAt.ToString("dd MMM yyyy");
+    var encodedDate = Uri.EscapeDataString(dateText);
+    var activityUrl = $"https://img.shields.io/badge/Activity-{encodedDate}-brightgreen?style=flat&logo=git-commit&logoColor=white";
+    var activityAlt = $"Last activity: {dateText}";
+
+    var sizeInMb = (double)repoSizeCount / 1024;
+    var sizeText = sizeInMb < 1 ? $"{repoSizeCount} KB" : $"{sizeInMb:F2} MB";
+    var sizeUrl = $"https://img.shields.io/badge/Size-{Uri.EscapeDataString(sizeText)}-blueviolet?style=flat&logo=files&logoColor=white";
+    var sizeAlt = $"Repository size: {sizeText}";
+
+    var issueColor = openIssuesCount is 0 ? "brightgreen" : "orange";
+    var issuesUrl = $"https://img.shields.io/badge/Issues-{openIssuesCount}-{issueColor}?style=flat&logo=github-actions&logoColor=white";
+    var issuesAlt = $"Open issues: {openIssuesCount}";
+
+    var licenseText = licenceName ?? "None";
+    var licenseUrl = $"https://img.shields.io/badge/Licence-{Uri.EscapeDataString(licenseText)}-blue?style=flat&logo=scale&logoColor=white";
+    var licenseAlt = $"License: {licenseText}";
+
+    var badges = new List<GithubBadgeDomain>
     {
-        var starsUrl = $"https://img.shields.io/badge/Stars-{stargazersCount}-gold?style=flat&logo=github-sponsors&logoColor=white";
-        var watchersUrl = $"https://img.shields.io/badge/Watchers-{subscribersCount}-4183C4?style=flat&logo=visibility&logoColor=white";
-        var forksUrl = $"https://img.shields.io/badge/Forks-{forksCount}-586069?style=flat&logo=git-fork&logoColor=white";
+        new() { Url = starsUrl, AltText = starsAlt},
+        new() { Url = watchersUrl, AltText = watchersAlt},
+        new() { Url = forksUrl, AltText = forksAlt},
+        new() { Url = activityUrl, AltText = activityAlt},
+        new() { Url = sizeUrl, AltText = sizeAlt},
+        new() { Url = issuesUrl, AltText = issuesAlt},
+        new() { Url = licenseUrl, AltText = licenseAlt}
+    };
 
-        var dateText = pushedAt.ToString("dd MMM yyyy");
-        var encodedDate = Uri.EscapeDataString(dateText);
-        var activityUrl = $"https://img.shields.io/badge/Activity-{encodedDate}-brightgreen?style=flat&logo=git-commit&logoColor=white";
+    return Task.FromResult(badges);
+}
 
-        var sizeInMb = (double)repoSizeCount / 1024;
-        var sizeText = sizeInMb < 1 ? $"{repoSizeCount} KB" : $"{sizeInMb:F2} MB";
-        var sizeUrl = $"https://img.shields.io/badge/Size-{Uri.EscapeDataString(sizeText)}-blueviolet?style=flat&logo=files&logoColor=white";
-
-        var issueColor = openIssuesCount is 0 ? "brightgreen" : "orange";
-        var issuesUrl = $"https://img.shields.io/badge/Issues-{openIssuesCount}-{issueColor}?style=flat&logo=github-actions&logoColor=white";
-
-        var licenseName = licenceName ?? "Null";
-        var licenseUrl = $"https://img.shields.io/badge/Licence-{Uri.EscapeDataString(licenseName)}-blue?style=flat&logo=scale&logoColor=white";
-
-        return Task.FromResult(new List<string> { starsUrl, watchersUrl, forksUrl, activityUrl, sizeUrl, issuesUrl, licenseUrl });
-    }
-
-    private async Task<IEnumerable<string>> CreateLanguageBadges(string ownerName, string repoName, CancellationToken cancellationToken)
+    /// <summary>
+    /// Asynchronously creates language badges for a specified repository.
+    /// <strong>GitHub API Token Cost:</strong> 1 token per repository (0 if cache hit).
+    /// </summary>
+    /// <param name="ownerName">The owner of the GitHub repository.</param>
+    /// <param name="repoName">The name of the GitHub repository.</param>
+    /// <param name="cancellationToken">A token to allow cancellation of the task.</param>
+    /// <returns>A task that represents the asynchronous operation and returns an enumerable GithubBadgeDomain collection containing language badges.</returns>
+    private async Task<IEnumerable<GithubBadgeDomain>> CreateLanguageBadges(string ownerName, string repoName, CancellationToken cancellationToken)
     {
         var cacheKey = $"languages_{ownerName}_{repoName}";
 
-        if (memoryCache.TryGetValue(cacheKey, out IEnumerable<string>? cachedLanguages) && cachedLanguages is not null)
+        if (memoryCache.TryGetValue(cacheKey, out IEnumerable<GithubBadgeDomain>? cachedLanguages) && cachedLanguages is not null)
         {
             logger.LogDebug("[{Repo}] Cache HIT for language badges", repoName);
             return cachedLanguages;
@@ -355,7 +434,7 @@ public class GithubRepository(
             }
 
             var totalBytes = languages.Values.Sum();
-            var badgeUrls = new List<string>();
+            var badges = new List<GithubBadgeDomain>();
 
             foreach (var (languageName, bytes) in languages)
             {
@@ -369,12 +448,14 @@ public class GithubRepository(
                 var percentageText = bytes > 0 && percentage is 0 ? "<0.01" : percentage.ToString("F2");
 
                 var urlBadge = $"https://img.shields.io/badge/{Uri.EscapeDataString(languageName)}-{Uri.EscapeDataString(percentageText)}-{metadata.CleanColor}?style=flat&logo={metadata.AceMode}&logoColor=white";
-                badgeUrls.Add(urlBadge);
+                var altText = $"{languageName} ({percentageText}%)";
+
+                badges.Add(new GithubBadgeDomain {Url = urlBadge, AltText = altText});
             }
 
-            memoryCache.Set(cacheKey, badgeUrls, CacheDuration);
-            logger.LogDebug("[{Repo}] Generated {Count} language badges and saved to cache", repoName, badgeUrls.Count);
-            return badgeUrls;
+            memoryCache.Set(cacheKey, badges, CacheDuration);
+            logger.LogDebug("[{Repo}] Generated {Count} language badges and saved to cache", repoName, badges.Count);
+            return badges;
         }
         catch (Exception ex)
         {

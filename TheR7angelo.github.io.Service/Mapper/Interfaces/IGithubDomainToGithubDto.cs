@@ -18,4 +18,6 @@ public interface IGithubDomainToGithubDto
     public GithubLicenseDomain MapToDomain(GithubLicenseDto entity);
 
     public GithubRepositoryInformationDto MapToDto(GithubRepositoryInformationDomain entity);
+
+    public GithubBadgeDto MapToDto(GithubBadgeDomain entity);
 }
