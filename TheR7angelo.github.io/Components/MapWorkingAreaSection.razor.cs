@@ -98,7 +98,7 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
         AddLayerIfAvailable(CreateCompanySiteLayer());
     }
 
-    private ILayer? CreateCityBoundaryLayer()
+    private GenericCollectionLayer<List<IFeature>>? CreateCityBoundaryLayer()
     {
         return CreateLayerFromEmbeddedGeoJson(
             CityBoundaryResourceName,
@@ -106,7 +106,7 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
             CreateCityBoundaryStyle());
     }
 
-    private ILayer? CreateCompanySiteLayer()
+    private GenericCollectionLayer<List<IFeature>>? CreateCompanySiteLayer()
     {
         return CreateLayerFromEmbeddedGeoJson(
             CompanySiteResourceName,
@@ -332,7 +332,7 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
 
     private static string? CopyAttributes(
         NetTopologySuite.Features.IFeature sourceFeature,
-        IFeature targetFeature)
+        GeometryFeature targetFeature)
     {
         if (sourceFeature.Attributes is null)
         {
