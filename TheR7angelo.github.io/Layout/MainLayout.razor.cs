@@ -28,7 +28,7 @@ public partial class MainLayout(IJSRuntime jsRuntime)
             Title = HomePageResources.MapWorkingAreaSectionTitle,
             Icon = Icons.Material.Filled.Map,
             ComponentType = typeof(MapWorkingAreaSection)
-        },
+        }
     ];
 
     protected override void OnInitialized()
@@ -73,7 +73,7 @@ public partial class MainLayout(IJSRuntime jsRuntime)
         AppbarBackground = "rgba(255,255,255,0.8)",
         DrawerBackground = "#ffffff",
         GrayLight = "#e8e8e8",
-        GrayLighter = "#f9f9f9",
+        GrayLighter = "#f9f9f9"
     };
 
     private readonly PaletteDark _darkPalette = new()
@@ -102,18 +102,13 @@ public partial class MainLayout(IJSRuntime jsRuntime)
         LinesDefault = "#33323e",
         TableLines = "#33323e",
         Divider = "#292838",
-        OverlayLight = "#1e1e2d80",
+        OverlayLight = "#1e1e2d80"
     };
-
-    public MainLayout(IJSRuntime jsRuntime)
-    {
-        JsRuntime = jsRuntime;
-    }
 
     private string DarkLightModeButtonIcon => _isDarkMode switch
     {
         true => Icons.Material.Rounded.LightMode,
-        false => Icons.Material.Outlined.DarkMode,
+        false => Icons.Material.Outlined.DarkMode
     };
 
     private async Task ScrollToSection(string elementId)
