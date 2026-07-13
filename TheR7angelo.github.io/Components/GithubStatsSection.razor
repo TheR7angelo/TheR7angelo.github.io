@@ -1,0 +1,130 @@
+﻿@using TheR7angelo.github.io.Resources.Resx.GithubStat
+@using TheR7angelo.github.io.Resources.Resx.HomePage
+@using Color = MudBlazor.Color
+<section class="anchor-section my-8">
+
+    <div class="d-flex align-center justify-center gap-3 mb-5 section-heading-anchor">
+        <MudIcon Icon="@Icons.Material.Filled.Leaderboard" Size="Size.Large"/>
+        <MudText Typo="Typo.h4" Class="font-weight-bold">
+            @HomePageResources.GithubStatTitle
+        </MudText>
+    </div>
+
+    @if (_chartData.Count is 0)
+    {
+        <div class="d-flex justify-center align-center w-100 my-8 pa-6 border rounded-lg mud-border-default bg-surface">
+            <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Medium" Class="mr-3"/>
+            <MudText Typo="Typo.body1" Class="mud-text-secondary font-weight-medium">
+                @GithubStatResources.CalcStat
+            </MudText>
+        </div>
+    }
+    else
+    {
+        <MudPaper Outlined="true" Elevation="0" Class="pa-6 rounded-lg bg-surface w-100">
+            <MudGrid Class="align-center justify-center">
+
+                <MudItem xs="12" md="6" Class="d-flex justify-center align-center" Style="min-height: 250px;">
+                    @if (_chartData.Count > 0)
+                    {
+                        <MudChart
+                            ChartType="ChartType.Donut"
+                            ChartOptions="@_chartOptions"
+                            Width="220"
+                            Height="220"
+                            ChartSeries="@_chartData"
+                            ChartLabels="@_chartLabels"
+                            LegendPosition="Position.Bottom"
+                            CanHideSeries="true">
+                        </MudChart>
+                    }
+                </MudItem>
+
+                <MudItem xs="12" md="6" Class="d-flex flex-column align-center">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary font-weight-bold mb-4">
+                        @GithubStatResources.TopTech
+                    </MudText>
+
+                    <div class="d-flex align-end justify-center gap-4 pt-8" style="height: 190px; width: 100%; max-width: 320px;">
+
+                        @if (_topLanguages.Count > 1)
+                        {
+                            <div class="d-flex flex-column align-center w-100">
+                                @if (!string.IsNullOrEmpty(_topLanguages[1].Url))
+                                {
+                                    <img src="@_topLanguages[1].Url" alt="@_topLanguages[1].Name"
+                                         style="width: 24px; height: 24px; object-fit: contain;" class="mb-1" />
+                                }
+                                <MudText Typo="Typo.caption" Class="font-weight-bold mb-1 text-center" Style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 80px;">
+                                    @_topLanguages[1].Name
+                                </MudText>
+                                <div class="d-flex flex-column align-center justify-center rounded-t-lg w-100 shadow-sm"
+                                     style="height: 75px; background: linear-gradient(135deg, #bdc3c7 0%, #ecc19a 100%); background-color: #d1d5db; color: #1f2937; min-width: 70px;">
+                                    <MudText Typo="Typo.h5" Class="font-weight-bold">2</MudText>
+                                    <MudText Typo="Typo.caption" Class="font-weight-medium" Style="color: #4b5563;">@_topLanguages[1].Percentage%</MudText>
+                                </div>
+                            </div>
+                        }
+
+                        @if (_topLanguages.Count > 0)
+                        {
+                            <div class="d-flex flex-column align-center w-100">
+                                @if (!string.IsNullOrEmpty(_topLanguages[0].Url))
+                                {
+                                    <img src="@_topLanguages[0].Url" alt="@_topLanguages[0].Name"
+                                         style="width: 28px; height: 28px; object-fit: contain;" class="mb-1" />
+                                }
+                                <MudText Typo="Typo.caption" Class="font-weight-bold mb-1 text-center" Style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 80px;">
+                                    @_topLanguages[0].Name
+                                </MudText>
+                                <div class="d-flex flex-column align-center justify-center rounded-t-lg w-100 shadow-md"
+                                     style="height: 110px; background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); background-color: #f59e0b; color: #ffffff; min-width: 70px;">
+                                    <MudText Typo="Typo.h4" Class="font-weight-bold">1</MudText>
+                                    <MudText Typo="Typo.caption" Class="font-weight-medium" Style="color: #fef3c7;">@_topLanguages[0].Percentage%</MudText>
+                                </div>
+                            </div>
+                        }
+
+                        @if (_topLanguages.Count > 2)
+                        {
+                            <div class="d-flex flex-column align-center w-100">
+                                @if (!string.IsNullOrEmpty(_topLanguages[2].Url))
+                                {
+                                    <img src="@_topLanguages[2].Url" alt="@_topLanguages[2].Name"
+                                         style="width: 24px; height: 24px; object-fit: contain;" class="mb-1" />
+                                }
+                                <MudText Typo="Typo.caption" Class="font-weight-bold mb-1 text-center" Style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 80px;">
+                                    @_topLanguages[2].Name
+                                </MudText>
+                                <div class="d-flex flex-column align-center justify-center rounded-t-lg w-100 shadow-sm"
+                                     style="height: 45px; background: linear-gradient(135deg, #d35400 0%, #e67e22 100%); background-color: #ca8a04; color: #ffffff; min-width: 70px;">
+                                    <MudText Typo="Typo.h6" Class="font-weight-bold">3</MudText>
+                                    <MudText Typo="Typo.caption" Class="font-weight-medium" Style="color: #ffedd5;">@_topLanguages[2].Percentage%</MudText>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                </MudItem>
+
+            </MudGrid>
+
+            <div class="my-5 border-b mud-border-default w-100" style="border-bottom: 1px solid;"></div>
+
+            <div class="px-2">
+                <div class="d-flex align-center gap-2 mb-2">
+                    <MudIcon Icon="@Icons.Material.Filled.Analytics" Size="Size.Medium" Class="mud-text-secondary" />
+                    <MudText Typo="Typo.subtitle1" Class="font-weight-bold">@GithubStatResources.Overview</MudText>
+                </div>
+                <MudText Typo="Typo.body2" Class="mud-text-secondary" Style="line-height: 1.6;">
+                    @GithubStatResources.Description1
+                    <span class="font-weight-bold mud-text-primary">@(_topLanguages.FirstOrDefault()?.Name ?? @GithubStatResources.Description2)</span>,
+                    @GithubStatResources.Description3
+                </MudText>
+            </div>
+
+        </MudPaper>
+    }
+
+</section>

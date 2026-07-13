@@ -24,6 +24,12 @@ public partial class MainLayout(IJSRuntime jsRuntime)
             Icon = Icons.Custom.Brands.GitHub,
             ComponentType = typeof(GithubRepoSection)
         },
+        new()
+        {
+            Title = HomePageResources.GithubStatTitle,
+            Icon = Icons.Material.Filled.Leaderboard,
+            ComponentType = typeof(GithubStatsSection)
+        },
         new() {
             Title = HomePageResources.MapWorkingAreaSectionTitle,
             Icon = Icons.Material.Filled.Map,
