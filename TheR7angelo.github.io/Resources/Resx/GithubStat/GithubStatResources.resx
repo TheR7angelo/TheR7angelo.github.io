@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CalcStat" xml:space="preserve">
+        <value>Calculating Statistics...</value>
+    </data>
+    <data name="TopTech" xml:space="preserve">
+        <value>TOP TECHNOLOGIES (BYTE VOLUME)</value>
+    </data>
+    <data name="Overview" xml:space="preserve">
+        <value>Overview of my activity</value>
+    </data>
+    <data name="Description1" xml:space="preserve">
+        <value>Real-time analysis of my GitHub repositories highlights my core specialization in</value>
+    </data>
+    <data name="Description2" xml:space="preserve">
+        <value>my main language</value>
+    </data>
+    <data name="Description3" xml:space="preserve">
+        <value>which represents the core of my volume of code produced. This ecosystem reflects my favorite technologies on a daily basis, while illustrating my versatility through the complementary tools on my podium.</value>
+    </data>
+</root>

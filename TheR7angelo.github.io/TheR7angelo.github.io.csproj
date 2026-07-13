@@ -58,6 +58,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GithubRepoSectionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resx\GithubStat\GithubStatResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GithubStatResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -90,6 +94,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GithubRepoSectionResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\GithubStat\GithubStatResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GithubStatResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
