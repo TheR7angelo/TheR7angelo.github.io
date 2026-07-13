@@ -1,5 +1,3 @@
 ﻿namespace TheR7angelo.github.io.Pages;
 
-public partial class Home()
-{
-}
+public partial class Home;
