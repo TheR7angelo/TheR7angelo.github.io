@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TheR7angelo.github.io.Resources.Resx.HomePage {
+namespace TheR7angelo.github.io.Resources.Resx.GithubRepoSection {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class HomePageResources {
+    internal class GithubRepoSectionResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal HomePageResources() {
+        internal GithubRepoSectionResources() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TheR7angelo.github.io.Resources.Resx.HomePage.HomePageResources", typeof(HomePageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TheR7angelo.github.io.Resources.Resx.GithubRepoSection.GithubRepoSectionResources", typeof(GithubRepoSectionResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,74 +60,56 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ⚡ Database Architecture &amp; Optimization.
+        ///   Looks up a localized string similar to Auto-reloading in.
         /// </summary>
-        internal static string DatabasesSectionTitle {
+        internal static string AutoReloadingIn {
             get {
-                return ResourceManager.GetString("DatabasesSectionTitle", resourceCulture);
+                return ResourceManager.GetString("AutoReloadingIn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My public github repositories.
+        ///   Looks up a localized string similar to Resets Around.
         /// </summary>
-        internal static string GithubRepoSectionTitle {
+        internal static string ExpectedReset {
             get {
-                return ResourceManager.GetString("GithubRepoSectionTitle", resourceCulture);
+                return ResourceManager.GetString("ExpectedReset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navigation.
+        ///   Looks up a localized string similar to The hourly request limit has been reached. Repositories will automatically reload..
         /// </summary>
-        internal static string MainLayoutDrawerTitle {
+        internal static string GithubApiLimitReach {
             get {
-                return ResourceManager.GetString("MainLayoutDrawerTitle", resourceCulture);
+                return ResourceManager.GetString("GithubApiLimitReach", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Building robust applications and optimizing data performance.
+        ///   Looks up a localized string similar to GitHub API Rate Limit Exceeded.
         /// </summary>
-        internal static string MainLayoutSubTitle {
+        internal static string GitHubAPIRateLimitExceeded {
             get {
-                return ResourceManager.GetString("MainLayoutSubTitle", resourceCulture);
+                return ResourceManager.GetString("GitHubAPIRateLimitExceeded", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Full Stack.
+        ///   Looks up a localized string similar to Technology used.
         /// </summary>
-        internal static string MainLayoutTitle1 {
+        internal static string Language {
             get {
-                return ResourceManager.GetString("MainLayoutTitle1", resourceCulture);
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .NET Developer.
+        ///   Looks up a localized string similar to Statistics.
         /// </summary>
-        internal static string MainLayoutTitle2 {
+        internal static string Statistics {
             get {
-                return ResourceManager.GetString("MainLayoutTitle2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏡My Anchor Points.
-        /// </summary>
-        internal static string MapWorkingAreaSectionTitle {
-            get {
-                return ResourceManager.GetString("MapWorkingAreaSectionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Portfolio.
-        /// </summary>
-        internal static string NavBarTitle {
-            get {
-                return ResourceManager.GetString("NavBarTitle", resourceCulture);
+                return ResourceManager.GetString("Statistics", resourceCulture);
             }
         }
     }

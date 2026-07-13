@@ -1,10 +1,15 @@
-﻿@using TheR7angelo.github.io.Resources.Resx.HomePage
+﻿@using TheR7angelo.github.io.Resources.Resx.Definition
+@using TheR7angelo.github.io.Resources.Resx.GithubRepoSection
+@using TheR7angelo.github.io.Resources.Resx.HomePage
 
 <section class="anchor-section">
 
-    <MudText Typo="Typo.h4" id="@MainLayout.GithubRepoSectionId" Class="mb-5 section-heading-anchor">
-        @HomePageResources.DatabasesSectionTitle
-    </MudText>
+    <div class="d-flex align-center justify-center gap-3 mb-5 section-heading-anchor" id="@MainLayout.GithubRepoSectionId">
+        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Large" />
+        <MudText Typo="Typo.h4" Class="font-weight-bold">
+            @HomePageResources.GithubRepoSectionTitle
+        </MudText>
+    </div>
 
     @if (IsLoading)
     {
@@ -17,33 +22,23 @@
         <div class="d-flex flex-column align-center justify-center w-100 my-8 pa-6 mud-alert-text-error rounded-lg" style="background-color: var(--mud-palette-error-hover);">
             <MudIcon Icon="@Icons.Material.Filled.Speed" Color="Color.Error" Size="Size.Large" Class="mb-3" />
             <MudText Typo="Typo.h6" Color="Color.Error" Align="Align.Center" Class="font-weight-bold">
-                GitHub API Rate Limit Exceeded
+                @GithubRepoSectionResources.GitHubAPIRateLimitExceeded
             </MudText>
-            @* TODO trad *@
             <MudText Typo="Typo.body1" Color="Color.Error" Align="Align.Center" Class="mt-1">
-                The daily unauthenticated request limit has been reached. Repositories will automatically reload.
+                @GithubRepoSectionResources.GithubApiLimitReach
             </MudText>
 
             @if (!string.IsNullOrEmpty(ResetTime))
             {
                 <div class="d-flex flex-column align-center mt-3 gap-2">
-                    @* TODO trad *@
                     <MudChip T="string" Color="Color.Error" Variant="Variant.Text" Icon="@Icons.Material.Filled.AccessTime">
-                        Expected to reset around <b>@ResetTime</b>
+                        @GithubRepoSectionResources.ExpectedReset <b>@ResetTime</b>
                     </MudChip>
 
                     @if (SecondsLeft > 0)
                     {
-                        @* TODO trad *@
                         <MudText Typo="Typo.caption" Color="Color.Error" Class="font-weight-medium">
-                            Auto-reloading in <b>@RemainingTimeText</b>...
-                        </MudText>
-                    }
-                    else
-                    {
-                        @* TODO trad *@
-                        <MudText Typo="Typo.caption" Color="Color.Error" Class="font-weight-medium">
-                            Reloading now...
+                            @GithubRepoSectionResources.AutoReloadingIn <b>@RemainingTimeText</b>...
                         </MudText>
                     }
                 </div>
@@ -74,7 +69,7 @@
                                         <div class="d-flex align-center gap-2">
                                             <MudIcon Icon="@Icons.Material.Filled.Code" Size="Size.Small" />
                                             <MudText Typo="Typo.body2" Class="font-weight-medium">
-                                                Languages @* TODO trad *@
+                                                @GithubRepoSectionResources.Language
                                             </MudText>
                                         </div>
                                     </TitleContent>
@@ -93,7 +88,7 @@
                                         <div class="d-flex align-center gap-2">
                                             <MudIcon Icon="@Icons.Material.Filled.BarChart" Size="Size.Small" />
                                             <MudText Typo="Typo.body2" Class="font-weight-medium">
-                                                Statistics @* TODO trad *@
+                                                @GithubRepoSectionResources.Statistics
                                             </MudText>
                                         </div>
                                     </TitleContent>

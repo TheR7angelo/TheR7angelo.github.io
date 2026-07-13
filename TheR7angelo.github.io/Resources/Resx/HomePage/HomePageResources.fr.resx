@@ -32,4 +32,7 @@
     <data name="MapWorkingAreaSectionTitle" xml:space="preserve">
         <value>🏡Mes Points d'Ancrage</value>
     </data>
+    <data name="GithubRepoSectionTitle" xml:space="preserve">
+        <value>Mes dépôts publics sur GitHub</value>
+    </data>
 </root>

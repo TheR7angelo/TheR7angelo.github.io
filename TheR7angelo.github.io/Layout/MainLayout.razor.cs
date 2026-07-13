@@ -20,7 +20,7 @@ public partial class MainLayout
     [
         new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage },
         new() { Id = MapWorkingAreaSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Material.Filled.Map },
-        new() { Id = GithubRepoSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Custom.Brands.GitHub },
+        new() { Id = GithubRepoSectionId, Title = HomePageResources.GithubRepoSectionTitle, Icon = Icons.Custom.Brands.GitHub },
     ];
 
     protected override void OnInitialized()

@@ -54,6 +54,10 @@
     </EmbeddedResource>
     <None Remove="Resources\Data\Assets\IneoInfracom.svg" />
     <EmbeddedResource Include="Resources\Data\Assets\IneoInfracom.svg" />
+    <EmbeddedResource Update="Resources\Resx\GithubRepoSection\GithubRepoSectionResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GithubRepoSectionResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -81,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MapWorkingAreaSectionResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\GithubRepoSection\GithubRepoSectionResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GithubRepoSectionResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
