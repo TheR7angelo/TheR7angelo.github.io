@@ -36,4 +36,7 @@
     <data name="GitHubAPIRateLimitExceeded" xml:space="preserve">
         <value>GitHub API Rate Limit Exceeded</value>
     </data>
+    <data name="NoDescriptionIsAvailable" xml:space="preserve">
+        <value>No additional descriptions available at this time.</value>
+    </data>
 </root>

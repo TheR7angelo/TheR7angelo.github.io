@@ -4,8 +4,8 @@
 
 <section class="anchor-section">
 
-    <div class="d-flex align-center justify-center gap-3 mb-5 section-heading-anchor" id="@MainLayout.GithubRepoSectionId">
-        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Large" />
+    <div class="d-flex align-center justify-center gap-3 mb-5 section-heading-anchor">
+        <MudIcon Icon="@(Icons.Custom.Brands.GitHub)" Size="Size.Large" />
         <MudText Typo="Typo.h4" Class="font-weight-bold">
             @HomePageResources.GithubRepoSectionTitle
         </MudText>
@@ -19,7 +19,7 @@
     }
     else if (IsRateLimited)
     {
-        <div class="d-flex flex-column align-center justify-center w-100 my-8 pa-6 mud-alert-text-error rounded-lg" style="background-color: var(--mud-palette-error-hover);">
+        <div class="d-flex flex-column align-center justify-center w-100 my-8 pa-6 mud-alert-text-error rounded-lg" style="background-color: var('--mud-palette-error-hover');">
             <MudIcon Icon="@Icons.Material.Filled.Speed" Color="Color.Error" Size="Size.Large" Class="mb-3" />
             <MudText Typo="Typo.h6" Color="Color.Error" Align="Align.Center" Class="font-weight-bold">
                 @GithubRepoSectionResources.GitHubAPIRateLimitExceeded
@@ -32,13 +32,13 @@
             {
                 <div class="d-flex flex-column align-center mt-3 gap-2">
                     <MudChip T="string" Color="Color.Error" Variant="Variant.Text" Icon="@Icons.Material.Filled.AccessTime">
-                        @GithubRepoSectionResources.ExpectedReset <b>@ResetTime</b>
+                        <text>@GithubRepoSectionResources.ExpectedReset <b>@ResetTime</b></text>
                     </MudChip>
 
                     @if (SecondsLeft > 0)
                     {
                         <MudText Typo="Typo.caption" Color="Color.Error" Class="font-weight-medium">
-                            @GithubRepoSectionResources.AutoReloadingIn <b>@RemainingTimeText</b>...
+                            <text>@GithubRepoSectionResources.AutoReloadingIn <b>@RemainingTimeText</b></text>
                         </MudText>
                     }
                 </div>
@@ -56,13 +56,14 @@
                              Class="pa-4 hover:mud-elevation-5"
                              Style="cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
                              onmouseover="this.style.transform='translateY(-10px)'"
-                             onmouseout="this.style.transform='translateY(0)'">
+                             onmouseout="this.style.transform='translateY(0)'"
+                             @onclick='() => OpenProjectDetails(githubRepositoryInformationDto)'>
 
                         <MudCardContent Class="d-flex flex-column align-center">
                             <MudImage Src="@githubRepositoryInformationDto.LogoUrl" Alt="@($"{githubRepositoryInformationDto.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
                             <MudText Typo="Typo.h6">@githubRepositoryInformationDto.Name</MudText>
 
-                            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="w-100 mt-4">
+                            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="w-100 mt-4" @onclick:stopPropagation>
 
                                 <MudExpansionPanel Class="rounded-lg mb-2">
                                     <TitleContent>
@@ -107,7 +108,12 @@
                         </MudCardContent>
 
                         <MudCardActions Class="justify-center">
-                            <MudLink Color="Color.Info" Target="_blank" Href="@githubRepositoryInformationDto.RepositoryUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                            <MudLink Color="Color.Info" Target="_blank" Href="@githubRepositoryInformationDto.RepositoryUrl"
+                                     StartIcon="@Icons.Custom.Brands.GitHub"
+                                     EndIcon="@Icons.Material.Filled.Launch"
+                                     @onclick:stopPropagation>
+                                @DefinitionResources.LearnMore
+                            </MudLink>
                         </MudCardActions>
 
                     </MudCard>

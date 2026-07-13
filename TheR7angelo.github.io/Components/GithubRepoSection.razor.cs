@@ -1,13 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using MudBlazor;
 using TheR7angelo.github.io.Domain.Models.Validation;
 using TheR7angelo.github.io.Service.Interface.Services;
 using TheR7angelo.github.io.Service.Models.GitHub;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger) : IDisposable
+public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger,
+    IDialogService dialogService) : IDisposable
 {
-    private ObservableCollection<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
+    private List<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
     private bool IsLoading { get; set; } = true;
     private bool IsRateLimited { get; set; }
     private string? ResetTime { get; set; }
@@ -86,7 +87,7 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
     private void ExtractResetTime(string? errorMessage)
     {
         if (string.IsNullOrEmpty(errorMessage)) return;
-        var match = System.Text.RegularExpressions.Regex.Match(errorMessage, @"\b\d{2}:\d{2}\b");
+        var match = MyRegex().Match(errorMessage);
         if (!match.Success) return;
 
         if (TimeSpan.TryParse(match.Value, out var parsedTime))
@@ -158,5 +159,22 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
     {
         CancelAutoReload();
         GC.SuppressFinalize(this);
+    }
+
+    [System.Text.RegularExpressions.GeneratedRegex(@"\b\d{2}:\d{2}\b")]
+    private static partial System.Text.RegularExpressions.Regex MyRegex();
+
+    private Task OpenProjectDetails(GithubRepositoryInformationDto project)
+    {
+        logger.LogInformation("Opening project dialog for {ProjectName}...", project.Name);
+
+        var parameters = new DialogParameters
+        {
+            { nameof(GithubRepoDialog.Project), project }
+        };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+
+        return dialogService.ShowAsync<GithubRepoDialog>(project.Name, parameters, options);
     }
 }

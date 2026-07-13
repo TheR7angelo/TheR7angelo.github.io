@@ -73,7 +73,7 @@
             scrollToElement: function (elementId) {
                 const element = document.getElementById(elementId);
                 if (element) {
-                    const offset = 100;
+                    const offset = 75;
                     const elementTop = element.getBoundingClientRect().top + window.scrollY;
                     window.scrollTo({
                         top: Math.max(0, elementTop - offset),

@@ -1,26 +1,34 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 using MudBlazor;
+using TheR7angelo.github.io.Components;
 using TheR7angelo.github.io.Resources.Resx.HomePage;
 
 namespace TheR7angelo.github.io.Layout;
 
-public partial class MainLayout
+public partial class MainLayout(IJSRuntime jsRuntime)
 {
     private bool _isDarkMode = true;
     private bool _isNavigationDrawerOpen;
     private MudTheme? _theme;
     private bool _isThemeInitialized;
 
-    public const string DatabasesSectionId = "databases-title";
-    public const string MapWorkingAreaSectionId = "mapworkingarea-title";
-    public const string GithubRepoSectionId = "githubrepo-title";
-
-    private readonly List<AnchorSection> _sections =
+    public static readonly List<AnchorSection> Sections =
     [
-        new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage },
-        new() { Id = MapWorkingAreaSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Material.Filled.Map },
-        new() { Id = GithubRepoSectionId, Title = HomePageResources.GithubRepoSectionTitle, Icon = Icons.Custom.Brands.GitHub },
+        new() {
+            Title = HomePageResources.DatabasesSectionTitle,
+            Icon = Icons.Material.Filled.Storage,
+            ComponentType = typeof(DatabaseSection)
+        },
+        new() {
+            Title = HomePageResources.GithubRepoSectionTitle,
+            Icon = Icons.Custom.Brands.GitHub,
+            ComponentType = typeof(GithubRepoSection)
+        },
+        new() {
+            Title = HomePageResources.MapWorkingAreaSectionTitle,
+            Icon = Icons.Material.Filled.Map,
+            ComponentType = typeof(MapWorkingAreaSection)
+        }
     ];
 
     protected override void OnInitialized()
@@ -42,17 +50,17 @@ public partial class MainLayout
             return;
         }
 
-        var preferredTheme = await JsRuntime.InvokeAsync<string>("ThemeHelper.getPreferredTheme");
+        var preferredTheme = await jsRuntime.InvokeAsync<string>("ThemeHelper.getPreferredTheme");
         _isDarkMode = preferredTheme == "dark";
         _isThemeInitialized = true;
-        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", preferredTheme);
+        await jsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", preferredTheme);
         StateHasChanged();
     }
 
     private async Task DarkModeToggle()
     {
         _isDarkMode = !_isDarkMode;
-        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", _isDarkMode ? "dark" : "light");
+        await jsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", _isDarkMode ? "dark" : "light");
     }
 
     private void ToggleNavigationDrawer()
@@ -65,7 +73,7 @@ public partial class MainLayout
         AppbarBackground = "rgba(255,255,255,0.8)",
         DrawerBackground = "#ffffff",
         GrayLight = "#e8e8e8",
-        GrayLighter = "#f9f9f9",
+        GrayLighter = "#f9f9f9"
     };
 
     private readonly PaletteDark _darkPalette = new()
@@ -94,25 +102,17 @@ public partial class MainLayout
         LinesDefault = "#33323e",
         TableLines = "#33323e",
         Divider = "#292838",
-        OverlayLight = "#1e1e2d80",
+        OverlayLight = "#1e1e2d80"
     };
-
-    public MainLayout(IJSRuntime jsRuntime)
-    {
-        JsRuntime = jsRuntime;
-    }
 
     private string DarkLightModeButtonIcon => _isDarkMode switch
     {
         true => Icons.Material.Rounded.LightMode,
-        false => Icons.Material.Outlined.DarkMode,
+        false => Icons.Material.Outlined.DarkMode
     };
-
-    [Inject]
-    private IJSRuntime JsRuntime { get; set; }
 
     private async Task ScrollToSection(string elementId)
     {
-        await JsRuntime.InvokeVoidAsync("ScrollHelper.scrollToElement", elementId);
+        await jsRuntime.InvokeVoidAsync("ScrollHelper.scrollToElement", elementId);
     }
 }

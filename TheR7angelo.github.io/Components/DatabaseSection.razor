@@ -4,7 +4,7 @@
 
 <section class="anchor-section">
 
-    <MudText Typo="Typo.h4" id="@MainLayout.DatabasesSectionId" Class="mb-5 section-heading-anchor" Align="Align.Center">
+    <MudText Typo="Typo.h4" Class="mb-5 section-heading-anchor" Align="Align.Center">
         @HomePageResources.DatabasesSectionTitle
     </MudText>
 
@@ -28,7 +28,11 @@
                     </MudCardContent>
 
                     <MudCardActions Class="justify-center">
-                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl"
+                                 EndIcon="@Icons.Material.Filled.Launch"
+                                 @onclick:stopPropagation>
+                            @DefinitionResources.LearnMore
+                        </MudLink>
                     </MudCardActions>
 
                 </MudCard>

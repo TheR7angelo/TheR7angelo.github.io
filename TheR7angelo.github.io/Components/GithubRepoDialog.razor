@@ -1,0 +1,65 @@
+﻿@using TheR7angelo.github.io.Resources.Resx.DatabaseProject
+@using TheR7angelo.github.io.Resources.Resx.Definition
+@using TheR7angelo.github.io.Resources.Resx.GithubRepoSection
+<MudDialog>
+
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="font-weight-bold" Align="Align.Center">@Project.Name</MudText>
+    </TitleContent>
+
+    <DialogContent>
+        <div class="d-flex flex-column gap-4">
+
+            <MudImage Src="@Project.LogoUrl" Alt="@Project.Name" ObjectFit="ObjectFit.ScaleDown" Height="200" Class="rounded-lg w-100"/>
+
+            @if (!string.IsNullOrEmpty(Project.Description))
+            {
+                <MudText Typo="Typo.body1">@Project.Description</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Color="Color.Secondary" Style="font-style: italic;">
+                    @GithubRepoSectionResources.NoDescriptionIsAvailable
+                </MudText>
+            }
+
+            @if (Project.LanguagesBadges.Any())
+            {
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    @foreach (var tech in Project.LanguagesBadges)
+                    {
+                        <MudImage Src="@tech.Url"  Alt="@tech.AltText" />
+                    }
+                </div>
+            }
+
+            @if (Project.StatsBadges.Any())
+            {
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    @foreach (var tech in Project.StatsBadges)
+                    {
+                        <MudImage Src="@tech.Url"  Alt="@tech.AltText" />
+                    }
+                </div>
+            }
+        </div>
+    </DialogContent>
+
+    <DialogActions>
+        @if (!string.IsNullOrEmpty(Project.RepositoryUrl))
+        {
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Custom.Brands.GitHub"
+                       EndIcon="@Icons.Material.Filled.Launch"
+                       Href="@Project.RepositoryUrl"
+                       Target="_blank">
+                @DefinitionResources.LearnMore
+            </MudButton>
+        }
+
+        <MudButton Color="Color.Primary" OnClick="@Close">@DatabaseProjectResources.ProjectDialogButtonCloseContent</MudButton>
+
+    </DialogActions>
+
+</MudDialog>
