@@ -1,8 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using TheR7angelo.github.io.Domain.Models.GitHub;
@@ -161,9 +159,9 @@ public class GithubRepository(
                 logger.LogDebug("[{Repo}] Dispatching tasks for languages, custom logo, and README...", repo);
                 var createLanguageBadgesTask = CreateLanguageBadges(owner, repo, cancellationToken);
                 var getCustomLogoUrlAsyncTask = GetCustomLogoUrlAsync(owner, repo, domain.DefaultBranch, cancellationToken);
-                var getReadmeHtmlAsyncTask = GetReadmeHtmlAsync(owner, repo, domain.DefaultBranch, cancellationToken);
+                // var getReadmeHtmlAsyncTask = GetReadmeHtmlAsync(owner, repo, domain.DefaultBranch, cancellationToken);
 
-                await Task.WhenAll(createLanguageBadgesTask, getCustomLogoUrlAsyncTask, getReadmeHtmlAsyncTask);
+                await Task.WhenAll(createLanguageBadgesTask, getCustomLogoUrlAsyncTask); //, getReadmeHtmlAsyncTask);
 
                 results.Add(new GithubRepositoryInformationDomain
                 {
@@ -171,7 +169,7 @@ public class GithubRepository(
                     Name = repo,
                     Description = domain.Description,
                     LogoUrl = await getCustomLogoUrlAsyncTask,
-                    ReadmeHtml = await getReadmeHtmlAsyncTask,
+                    // ReadmeHtml = await getReadmeHtmlAsyncTask,
                     LanguagesBadges = await createLanguageBadgesTask,
                     StatsBadges = statsBadges
                 });
@@ -190,70 +188,70 @@ public class GithubRepository(
         }
     }
 
-    /// <summary>
-    /// Retrieves the HTML content of a repository's README file from GitHub.
-    /// <strong>GitHub API Token Cost:</strong> 1 token per repository (0 if cache hit).
-    /// </summary>
-    /// <param name="owner">The owner of the repository.</param>
-    /// <param name="repoName">The name of the repository.</param>
-    /// <param name="defaultBranch">The default branch of the repository.</param>
-    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The result is a string containing the HTML content of the README file, or null if an error occurs.</returns>
-    private async Task<string?> GetReadmeHtmlAsync(string owner, string repoName, string defaultBranch,
-        CancellationToken cancellationToken)
-    {
-        var cacheKey = $"readme_{owner}_{repoName}";
-
-        if (memoryCache.TryGetValue(cacheKey, out string? cachedReadme))
-        {
-            logger.LogDebug("[{Repo}] Cache HIT for README", repoName);
-            return cachedReadme;
-        }
-
-        logger.LogDebug("[{Repo}] Cache MISS for README. Querying GitHub API...", repoName);
-        try
-        {
-            var httpClient = httpClientFactory.CreateClient(IGithubRepository.HttpGithubClientName);
-
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/repos/{owner}/{repoName}/readme");
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.html"));
-
-            var response = await httpClient.SendAsync(request, cancellationToken);
-            if (response.StatusCode is HttpStatusCode.NotFound)
-            {
-                logger.LogWarning("[{Repo}] No README file found (404)", repoName);
-                memoryCache.Set<string?>(cacheKey, null, CacheDuration);
-                return null;
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogError("[{Repo}] Failed to fetch README. HTTP status: {StatusCode}", repoName, response.StatusCode);
-                return null;
-            }
-
-            var htmlContent = await response.Content.ReadAsStringAsync(cancellationToken);
-            var rawBaseUrl = $"https://raw.githubusercontent.com/{owner}/{repoName}/{defaultBranch}/";
-            var blobBaseUrl = $"https://github.com/{owner}/{repoName}/blob/{defaultBranch}/";
-
-            htmlContent = Regex.Replace(htmlContent,
-                @"<img\s+[^>]*src=[""'](?!(?:https?://|/))([^""']+)[""']",
-                match => match.Value.Replace(match.Groups[1].Value, rawBaseUrl + match.Groups[1].Value));
-
-            htmlContent = Regex.Replace(htmlContent,
-                @"<a\s+[^>]*href=[""'](?!(?:https?://|/|#))([^""']+)[""']",
-                match => match.Value.Replace(match.Groups[1].Value, blobBaseUrl + match.Groups[1].Value));
-
-            memoryCache.Set(cacheKey, htmlContent, CacheDuration);
-            logger.LogDebug("[{Repo}] README parsed, paths fixed, and stored in cache", repoName);
-            return htmlContent;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "[{Repo}] Exception thrown during GetReadmeHtmlAsync", repoName);
-            return null;
-        }
-    }
+    // /// <summary>
+    // /// Retrieves the HTML content of a repository's README file from GitHub.
+    // /// <strong>GitHub API Token Cost:</strong> 1 token per repository (0 if cache hit).
+    // /// </summary>
+    // /// <param name="owner">The owner of the repository.</param>
+    // /// <param name="repoName">The name of the repository.</param>
+    // /// <param name="defaultBranch">The default branch of the repository.</param>
+    // /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    // /// <returns>A task that represents the asynchronous operation. The result is a string containing the HTML content of the README file, or null if an error occurs.</returns>
+    // private async Task<string?> GetReadmeHtmlAsync(string owner, string repoName, string defaultBranch,
+    //     CancellationToken cancellationToken)
+    // {
+    //     var cacheKey = $"readme_{owner}_{repoName}";
+    //
+    //     if (memoryCache.TryGetValue(cacheKey, out string? cachedReadme))
+    //     {
+    //         logger.LogDebug("[{Repo}] Cache HIT for README", repoName);
+    //         return cachedReadme;
+    //     }
+    //
+    //     logger.LogDebug("[{Repo}] Cache MISS for README. Querying GitHub API...", repoName);
+    //     try
+    //     {
+    //         var httpClient = httpClientFactory.CreateClient(IGithubRepository.HttpGithubClientName);
+    //
+    //         var request = new HttpRequestMessage(HttpMethod.Get, $"/repos/{owner}/{repoName}/readme");
+    //         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.html"));
+    //
+    //         var response = await httpClient.SendAsync(request, cancellationToken);
+    //         if (response.StatusCode is HttpStatusCode.NotFound)
+    //         {
+    //             logger.LogWarning("[{Repo}] No README file found (404)", repoName);
+    //             memoryCache.Set<string?>(cacheKey, null, CacheDuration);
+    //             return null;
+    //         }
+    //
+    //         if (!response.IsSuccessStatusCode)
+    //         {
+    //             logger.LogError("[{Repo}] Failed to fetch README. HTTP status: {StatusCode}", repoName, response.StatusCode);
+    //             return null;
+    //         }
+    //
+    //         var htmlContent = await response.Content.ReadAsStringAsync(cancellationToken);
+    //         var rawBaseUrl = $"https://raw.githubusercontent.com/{owner}/{repoName}/{defaultBranch}/";
+    //         var blobBaseUrl = $"https://github.com/{owner}/{repoName}/blob/{defaultBranch}/";
+    //
+    //         htmlContent = Regex.Replace(htmlContent,
+    //             @"<img\s+[^>]*src=[""'](?!(?:https?://|/))([^""']+)[""']",
+    //             match => match.Value.Replace(match.Groups[1].Value, rawBaseUrl + match.Groups[1].Value));
+    //
+    //         htmlContent = Regex.Replace(htmlContent,
+    //             @"<a\s+[^>]*href=[""'](?!(?:https?://|/|#))([^""']+)[""']",
+    //             match => match.Value.Replace(match.Groups[1].Value, blobBaseUrl + match.Groups[1].Value));
+    //
+    //         memoryCache.Set(cacheKey, htmlContent, CacheDuration);
+    //         logger.LogDebug("[{Repo}] README parsed, paths fixed, and stored in cache", repoName);
+    //         return htmlContent;
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         logger.LogError(ex, "[{Repo}] Exception thrown during GetReadmeHtmlAsync", repoName);
+    //         return null;
+    //     }
+    // }
 
     /// <summary>
     /// Retrieves the URL of a custom logo for a specified GitHub repository.
