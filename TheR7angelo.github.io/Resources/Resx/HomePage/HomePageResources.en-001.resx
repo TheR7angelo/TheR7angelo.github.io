@@ -35,4 +35,7 @@
     <data name="GithubRepoSectionTitle" xml:space="preserve">
         <value>My public github repositories</value>
     </data>
+    <data name="GithubStatTitle" xml:space="preserve">
+        <value>Ecosystem Analysis</value>
+    </data>
 </root>

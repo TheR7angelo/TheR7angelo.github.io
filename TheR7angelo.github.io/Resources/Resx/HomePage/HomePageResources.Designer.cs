@@ -78,6 +78,15 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ecosystem Analysis.
+        /// </summary>
+        internal static string GithubStatTitle {
+            get {
+                return ResourceManager.GetString("GithubStatTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Navigation.
         /// </summary>
         internal static string MainLayoutDrawerTitle {
