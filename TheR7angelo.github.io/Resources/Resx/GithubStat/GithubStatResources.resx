@@ -18,13 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="ProjectDialogHeaderContent" xml:space="preserve">
-        <value>Here are the major projects where I designed and operated the database</value>
+    <data name="CalcStat" xml:space="preserve">
+        <value>Calculating Statistics...</value>
     </data>
-    <data name="ProjectDialogButtonCloseContent" xml:space="preserve">
-        <value>Close</value>
+    <data name="TopTech" xml:space="preserve">
+        <value>TOP TECHNOLOGIES (BYTE VOLUME)</value>
     </data>
-    <data name="Criticality" xml:space="preserve">
-        <value>Criticality</value>
+    <data name="Overview" xml:space="preserve">
+        <value>Overview of my activity</value>
+    </data>
+    <data name="Description1" xml:space="preserve">
+        <value>Real-time analysis of my GitHub repositories highlights my core specialization in</value>
+    </data>
+    <data name="Description2" xml:space="preserve">
+        <value>my main language</value>
+    </data>
+    <data name="Description3" xml:space="preserve">
+        <value>which represents the core of my volume of code produced. This ecosystem reflects my favorite technologies on a daily basis, while illustrating my versatility through the complementary tools on my podium.</value>
     </data>
 </root>

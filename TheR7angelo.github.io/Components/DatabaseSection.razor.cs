@@ -1,9 +1,10 @@
-﻿using MudBlazor;
-using TheR7angelo.github.io.Resources.Resx.DatabaseProject;
+﻿using System.Globalization;
+using System.Net.Http.Json;
+using MudBlazor;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogService dialogService)
+public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogService dialogService, IHttpClientFactory httpClientFactory)
 {
     private List<DataBaseTechnology> DataBaseTechnologies { get; } = [];
 
@@ -11,57 +12,41 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
     {
         await base.OnInitializedAsync();
 
-        FillProjets();
+        await FillProjets();
     }
 
-    private void FillProjets()
+    private async Task FillProjets()
     {
-        DataBaseTechnologies.Clear();
+        var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-        var sqlServerProjects = FillSqlServerProjects().OrderByDescending(p => p.Importance);
-        var postgreSqlProjects = FillPostgreSqlProjects().OrderByDescending(p => p.Importance);
-        var sqLiteProjects = FillSqLiteProjects().OrderByDescending(p => p.Importance);
+        var httpClient = httpClientFactory.CreateClient();
 
-        DataBaseTechnologies.AddRange([
-            new DataBaseTechnology(DataBaseTechnologyEnum.SqlServer, "SQL Server", "/Assets/DataBase/sql-server.svg",
-                "https://learn.microsoft.com/en-us/sql/sql-server/", sqlServerProjects.ToList()),
+        var skeletons = await httpClient.GetFromJsonAsync<List<DataBaseTechSkeleton>>("Data/databases_project.json");
+        var langData = await httpClient.GetFromJsonAsync<Dictionary<string, List<ProjectDescription>>>($"Data/databases_project_{currentCulture}.json");
 
-            new DataBaseTechnology(DataBaseTechnologyEnum.PostgreSql, "PostgreSQL", "/Assets/DataBase/postgresql.svg",
-                "https://www.postgresql.org/", postgreSqlProjects.ToList()),
+        if (skeletons is not null)
+        {
+            DataBaseTechnologies.Clear();
 
-            new DataBaseTechnology(DataBaseTechnologyEnum.SqLite, "SQLite", "/Assets/DataBase/sqlite.svg",
-                "https://www.sqlite.org/", sqLiteProjects.ToList())
-        ]);
-    }
+            foreach (var skeleton in skeletons)
+            {
+                var techIdStr = ((int)skeleton.TechType).ToString();
+                var projectsForThisTech = new List<ProjectDescription>();
 
-    private static IEnumerable<ProjectDescription> FillPostgreSqlProjects()
-    {
-        var qGisProject = new ProjectDescription(DatabaseProjectResources.PostgreSqlProjectQgisHeader,
-            DatabaseProjectResources.PostgreSqlProjectQgisDescription, 4);
+                if (langData is not null && langData.TryGetValue(techIdStr, out var projects))
+                {
+                    projectsForThisTech = projects.OrderByDescending(p => p.Importance).ToList();
+                }
 
-        var erpProject = new ProjectDescription(DatabaseProjectResources.PostgreSqlProjectSireoRCCHeader,
-            DatabaseProjectResources.PostgreSqlProjectSireoRCCDescription, 3);
-
-        return [qGisProject, erpProject];
-    }
-
-    private static IEnumerable<ProjectDescription> FillSqlServerProjects()
-    {
-        var erpProject = new ProjectDescription(DatabaseProjectResources.SqlServerProjectErpExploitationHeader,
-            DatabaseProjectResources.SqlServerProjectErpExploitationDescription, 5);
-
-        return [erpProject];
-    }
-
-    private static IEnumerable<ProjectDescription> FillSqLiteProjects()
-    {
-        var financeProject = new ProjectDescription(DatabaseProjectResources.SqliteProjectMyExpenseHeader,
-            DatabaseProjectResources.SqliteProjectMyExpenseDescription, 3);
-
-        var owfProject = new ProjectDescription(DatabaseProjectResources.SqliteProjectControlOwfHeader,
-            DatabaseProjectResources.SqliteProjectControlOwfDescription, 5);
-
-        return [financeProject, owfProject];
+                DataBaseTechnologies.Add(new DataBaseTechnology(
+                    skeleton.TechType,
+                    skeleton.Name,
+                    skeleton.LogoPath,
+                    skeleton.LearnMoreUrl,
+                    projectsForThisTech
+                ));
+            }
+        }
     }
 
     private Task<IDialogReference> NavigateToDatabase(DataBaseTechnology tech)
@@ -79,6 +64,12 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
         return dialogService.ShowAsync<DatabaseProjectDialog>($"Détails {tech.Name}", parameters, options);
     }
 }
+
+public record DataBaseTechSkeleton(
+    DataBaseTechnologyEnum TechType,
+    string Name,
+    string LogoPath,
+    string LearnMoreUrl);
 
 public record DataBaseTechnology(
     DataBaseTechnologyEnum TechType,

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TheR7angelo.github.io.Resources.Resx.HomePage {
+namespace TheR7angelo.github.io.Resources.Resx.GithubStat {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class HomePageResources {
+    internal class GithubStatResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal HomePageResources() {
+        internal GithubStatResources() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TheR7angelo.github.io.Resources.Resx.HomePage.HomePageResources", typeof(HomePageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TheR7angelo.github.io.Resources.Resx.GithubStat.GithubStatResources", typeof(GithubStatResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,83 +60,56 @@ namespace TheR7angelo.github.io.Resources.Resx.HomePage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ⚡ Database Architecture &amp; Optimization.
+        ///   Looks up a localized string similar to Calculating Statistics....
         /// </summary>
-        internal static string DatabasesSectionTitle {
+        internal static string CalcStat {
             get {
-                return ResourceManager.GetString("DatabasesSectionTitle", resourceCulture);
+                return ResourceManager.GetString("CalcStat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My public github repositories.
+        ///   Looks up a localized string similar to Real-time analysis of my GitHub repositories highlights my core specialization in.
         /// </summary>
-        internal static string GithubRepoSectionTitle {
+        internal static string Description1 {
             get {
-                return ResourceManager.GetString("GithubRepoSectionTitle", resourceCulture);
+                return ResourceManager.GetString("Description1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ecosystem Analysis.
+        ///   Looks up a localized string similar to my main language.
         /// </summary>
-        internal static string GithubStatTitle {
+        internal static string Description2 {
             get {
-                return ResourceManager.GetString("GithubStatTitle", resourceCulture);
+                return ResourceManager.GetString("Description2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navigation.
+        ///   Looks up a localized string similar to which represents the core of my volume of code produced. This ecosystem reflects my favorite technologies on a daily basis, while illustrating my versatility through the complementary tools on my podium..
         /// </summary>
-        internal static string MainLayoutDrawerTitle {
+        internal static string Description3 {
             get {
-                return ResourceManager.GetString("MainLayoutDrawerTitle", resourceCulture);
+                return ResourceManager.GetString("Description3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Building robust applications and optimizing data performance.
+        ///   Looks up a localized string similar to Overview of my activity.
         /// </summary>
-        internal static string MainLayoutSubTitle {
+        internal static string Overview {
             get {
-                return ResourceManager.GetString("MainLayoutSubTitle", resourceCulture);
+                return ResourceManager.GetString("Overview", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Full Stack.
+        ///   Looks up a localized string similar to TOP TECHNOLOGIES (BYTE VOLUME).
         /// </summary>
-        internal static string MainLayoutTitle1 {
+        internal static string TopTech {
             get {
-                return ResourceManager.GetString("MainLayoutTitle1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .NET Developer.
-        /// </summary>
-        internal static string MainLayoutTitle2 {
-            get {
-                return ResourceManager.GetString("MainLayoutTitle2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏡My Anchor Points.
-        /// </summary>
-        internal static string MapWorkingAreaSectionTitle {
-            get {
-                return ResourceManager.GetString("MapWorkingAreaSectionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Portfolio.
-        /// </summary>
-        internal static string NavBarTitle {
-            get {
-                return ResourceManager.GetString("NavBarTitle", resourceCulture);
+                return ResourceManager.GetString("TopTech", resourceCulture);
             }
         }
     }

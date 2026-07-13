@@ -1,0 +1,33 @@
+﻿{
+  "0": [
+    {
+      "IconAndTitle": "\uD83C\uDFE2 Infrastructure & Business Logic ERP - Exploitation",
+      "Description": "\uD83C\uDFCE\uFE0F Performance & Concurrency: Indexing, tuning of heavy queries and management of multi-user transactions.\n\n\uD83E\uDDE0 Business rules: Centralization of complex application logic via stored procedures (T-SQL).\n\n\uD83D\uDEE1\uFE0F Ops & Data: Deployment of backup strategies (DRPs), high availability and feeding of BI streams in real time.",
+      "Importance": 5
+    }
+  ],
+  "1": [
+    {
+      "IconAndTitle": "\uD83D\uDDFA\uFE0F Geographic Information System (GIS)",
+      "Description": "\uD83D\uDE80 Architecture & Optimization: Modeling of a spatial database (PostGIS) and indexing of complex geospatial queries.\n\n⚙\uFE0F Automation & ETL: Writing stored functions for processing multi-format import/export geometries and scripts.\n\n\uD83D\uDD10 Security & Restitution: Fine-grained administration of access rights and integration of data flows into QGIS and dashboards.",
+      "Importance": 4
+    },
+    {
+      "IconAndTitle": "\uD83C\uDFE2 Enterprise ERP - SIREO RCC",
+      "Description": "\uD83D\uDCD0 Modeling: Design of a highly standardized and robust relational architecture.\n\n\uD83D\uDD0C .NET Core Pipeline: Development of a REST API to expose data to the internal web application.\n\n\uD83D\uDCCA Reporting: Creation of optimized views for financial and operational reporting.",
+      "Importance": 3
+    }
+  ],
+  "3": [
+    {
+      "IconAndTitle": "\uD83D\uDCB0 Personal Finance Manager (Open Source) - MyExpense",
+      "Description": "\uD83D\uDE80 Scalable Architecture: Complete redesign of the MVVM application to migrate from a WPF interface to a cross-platform .NET MAUI / Blazor solution.\n\n\uD83D\uDCCA Data & Reporting Engine: Local modeling under SQLite for transaction tracking, analytical management of flows (inputs/outputs) and recurrences (subscriptions, fixed costs).\n\n\uD83D\uDDFA\uFE0F Geospatial & BI Module: Integration of a system to map expenses and generate advanced reports by brand, type of payment (card, transfer, check) and financial volume.",
+      "Importance": 3
+    },
+    {
+      "IconAndTitle": "⚡ Data Audit & Consistency Tools - Control OWF",
+      "Description": "\uD83C\uDFAF Centralization Pipeline (ETL): Massive extraction and consolidation of heterogeneous data (complex Excel files, telecom load calculations, GIS shapefiles) to a unified SQLite local database.\n\n\uD83E\uDDE0 Rules & Validation Engine: Design of advanced relational queries and spatial controls to automatically point out inconsistencies (INSEE validations, absence of GPS coordinates, technical deviations).\n\n\uD83D\uDCC8 Business Impact: Automated generation of visual error reports for designers, dividing the processing time of final fiber connection files by a factor of 4 to 5 hours.",
+      "Importance": 5
+    }
+  ]
+}

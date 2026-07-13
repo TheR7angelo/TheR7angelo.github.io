@@ -1,0 +1,32 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CalcStat" xml:space="preserve">
+        <value>Calcul des statistiques en cours...</value>
+    </data>
+    <data name="TopTech" xml:space="preserve">
+        <value>TOP TECHNOLOGIES (VOLUME D'OCTETS)</value>
+    </data>
+    <data name="Overview" xml:space="preserve">
+        <value>Aperçu de mon activité</value>
+    </data>
+    <data name="Description1" xml:space="preserve">
+        <value>L'analyse en temps réel de mes dépôts GitHub met en valeur ma spécialisation principale en</value>
+    </data>
+    <data name="Description2" xml:space="preserve">
+        <value>mon langage principal</value>
+    </data>
+    <data name="Description3" xml:space="preserve">
+        <value>qui représente le cœur de mon volume de code produit. Cet écosystème reflète mes technologies de prédilection au quotidien, tout en illustrant ma polyvalence à travers les outils complémentaires présents sur mon podium.</value>
+    </data>
+</root>

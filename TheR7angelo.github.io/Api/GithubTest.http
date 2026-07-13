@@ -30,3 +30,6 @@ https://raw.githubusercontent.com/github-linguist/linguist/master/lib/linguist/l
 ### try getting readme in html format
 https://api.github.com/repos/TheR7angelo/MyExpenses/readme
 Accept: application/vnd.github.html
+
+### Test
+https://cdn.jsdelivr.net/gh/devicons/devicon/icons/batch/batch-original.svg

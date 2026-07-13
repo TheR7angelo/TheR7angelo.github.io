@@ -15,6 +15,7 @@ builder.Services.AddAllDependency();
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddScoped<GithubStateService>();
 
 var host = builder.Build();
 

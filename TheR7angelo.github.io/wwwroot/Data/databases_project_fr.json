@@ -1,0 +1,33 @@
+﻿{
+  "0": [
+    {
+      "IconAndTitle": "\uD83C\uDFE2 Infrastructure & Logique Métier ERP - Exploitation",
+      "Description": "\uD83C\uDFCE\uFE0F Performance & Concurrence : Indexation, tuning de requêtes lourdes et gestion des transactions multi-utilisateurs.\n\n\uD83E\uDDE0 Règles Métiers : Centralisation de la logique applicative complexe via des procédures stockées (T-SQL).\n\n\uD83D\uDEE1\uFE0F Ops & Data : Déploiement de stratégies de sauvegarde (PRA), haute disponibilité et alimentation de flux BI en temps réel.",
+      "Importance": 5
+    }
+  ],
+  "1": [
+    {
+      "IconAndTitle": "\uD83D\uDDFA\uFE0F Système d'Information Géographique (SIG)",
+      "Description": "\uD83D\uDE80 Architecture & Optimisation : Modélisation d'une base spatiale (PostGIS) et indexation de requêtes géospatiales complexes.\n\n⚙\uFE0F Automatisation & ETL : Écriture de fonctions stockées pour le traitement des géométries et scripts d'import/export multi-formats.\n\n\uD83D\uDD10 Sécurité & Restitution : Administration fine des droits d'accès et intégration des flux de données dans QGIS et tableaux de bord.",
+      "Importance": 4
+    },
+    {
+      "IconAndTitle": "\uD83C\uDFE2 ERP d'Entreprise - SIREO RCC",
+      "Description": "\uD83D\uDCD0 Modélisation : Conception d'une architecture relationnelle hautement normalisée et robuste.\n\n\uD83D\uDD0C Pipeline .NET Core : Développement d'une API REST pour exposer les données à l'application web interne.\n\n\uD83D\uDCCA Reporting : Création de vues optimisées pour la génération de rapports financiers et opérationnels.",
+      "Importance": 3
+    }
+  ],
+  "3": [
+    {
+      "IconAndTitle": "\uD83D\uDCB0 Gestionnaire de Finances Personneles (Open Source) - MyExpense",
+      "Description": "\uD83D\uDE80 Architecture Évolutive : Refonte complète de l'application en MVVM pour migrer d'une interface WPF vers une solution multiplateforme .NET MAUI / Blazor.\n\n\uD83D\uDCCA Moteur de Données & Reporting : Modélisation locale sous SQLite pour le suivi des transactions, la gestion analytique des flux (entrées/sorties) et des récurrences (abonnements, charges fixes).\n\n\uD83D\uDDFA\uFE0F Module Géospatiale & BI : Intégration d'un système pour cartographier les dépenses et générer des rapports avancés par enseigne, type de paiement (carte, virement, chèque) et volume financier.",
+      "Importance": 3
+    },
+    {
+      "IconAndTitle": "⚡ Outils d'Audit & Cohérence Data - Control OWF",
+      "Description": "\uD83C\uDFAF Pipeline de Centralisation (ETL) : Extraction et consolidation massive de données hétérogènes (fichiers Excel complexes, calculs de charge télécom, Shapefiles SIG) vers une base locale SQLite unifiée.\n\n\uD83E\uDDE0 Moteur de Règles & Validation : Conception de requêtes relationnelles avancées et contrôles spatiaux pour pointer automatiquement les incohérences (validations INSEE, absence de coordonnées GPS, écarts techniques).\n\n\uD83D\uDCC8 Impact Business : Génération automatisée de rapports d'erreurs visuels pour les projeteurs, divisant le temps de traitement des dossiers finaux de raccordement fibre par un facteur de 4 à 5 heures.",
+      "Importance": 5
+    }
+  ]
+}

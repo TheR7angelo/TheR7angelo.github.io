@@ -25,6 +25,18 @@
     <Content Include="..\.gitignore">
       <Link>.gitignore</Link>
     </Content>
+    <Content Update="wwwroot\Data\databases_project.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\databases_project_en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\databases_project_fr.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Dockerfile">
+      <Link>Dockerfile</Link>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +70,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GithubRepoSectionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resx\GithubStat\GithubStatResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GithubStatResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -90,6 +106,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GithubRepoSectionResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Resx\GithubStat\GithubStatResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GithubStatResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
