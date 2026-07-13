@@ -1,6 +1,5 @@
 namespace TheR7angelo.github.io.Domain.Models.Validation;
 
-// TODO make internal
 public class Result
 {
     public bool IsSuccess { get; private set; }
