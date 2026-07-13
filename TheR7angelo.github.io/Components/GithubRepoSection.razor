@@ -108,7 +108,12 @@
                         </MudCardContent>
 
                         <MudCardActions Class="justify-center">
-                            <MudLink Color="Color.Info" Target="_blank" Href="@githubRepositoryInformationDto.RepositoryUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                            <MudLink Color="Color.Info" Target="_blank" Href="@githubRepositoryInformationDto.RepositoryUrl"
+                                     StartIcon="@Icons.Custom.Brands.GitHub"
+                                     EndIcon="@Icons.Material.Filled.Launch"
+                                     @onclick:stopPropagation>
+                                @DefinitionResources.LearnMore
+                            </MudLink>
                         </MudCardActions>
 
                     </MudCard>

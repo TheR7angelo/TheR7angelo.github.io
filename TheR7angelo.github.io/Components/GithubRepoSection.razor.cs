@@ -1,10 +1,12 @@
-﻿using TheR7angelo.github.io.Domain.Models.Validation;
+﻿using MudBlazor;
+using TheR7angelo.github.io.Domain.Models.Validation;
 using TheR7angelo.github.io.Service.Interface.Services;
 using TheR7angelo.github.io.Service.Models.GitHub;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger) : IDisposable
+public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger,
+    IDialogService dialogService) : IDisposable
 {
     private List<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
     private bool IsLoading { get; set; } = true;
@@ -161,4 +163,18 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
 
     [System.Text.RegularExpressions.GeneratedRegex(@"\b\d{2}:\d{2}\b")]
     private static partial System.Text.RegularExpressions.Regex MyRegex();
+
+    private Task OpenProjectDetails(GithubRepositoryInformationDto project)
+    {
+        logger.LogInformation("Opening project dialog for {ProjectName}...", project.Name);
+
+        var parameters = new DialogParameters
+        {
+            { nameof(GithubRepoDialog.Project), project }
+        };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+
+        return dialogService.ShowAsync<GithubRepoDialog>(project.Name, parameters, options);
+    }
 }
