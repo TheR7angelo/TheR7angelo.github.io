@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogService dialogService, IHttpClientFactory httpClientFactory)
+public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogService dialogService,
+    IHttpClientFactory httpClientFactory, NavigationManager navigationManager)
 {
     private List<DataBaseTechnology> DataBaseTechnologies { get; } = [];
 
@@ -21,8 +23,8 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
 
         var httpClient = httpClientFactory.CreateClient();
 
-        var skeletons = await httpClient.GetFromJsonAsync<List<DataBaseTechSkeleton>>("Data/databases_project.json");
-        var langData = await httpClient.GetFromJsonAsync<Dictionary<string, List<ProjectDescription>>>($"Data/databases_project_{currentCulture}.json");
+        var skeletons = await httpClient.GetFromJsonAsync<List<DataBaseTechSkeleton>>($"{navigationManager.BaseUri}Data/databases_project.json");
+        var langData = await httpClient.GetFromJsonAsync<Dictionary<string, List<ProjectDescription>>>($"{navigationManager.BaseUri}Data/databases_project_{currentCulture}.json");
 
         if (skeletons is not null)
         {
