@@ -105,6 +105,15 @@ namespace TheR7angelo.github.io.Resources.Resx.GithubRepoSection {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No additional descriptions available at this time..
+        /// </summary>
+        internal static string NoDescriptionIsAvailable {
+            get {
+                return ResourceManager.GetString("NoDescriptionIsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statistics.
         /// </summary>
         internal static string Statistics {

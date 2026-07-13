@@ -29,4 +29,7 @@
     <data name="GitHubAPIRateLimitExceeded" xml:space="preserve">
         <value>Limite de débit de l’API GitHub dépassée</value>
     </data>
+    <data name="NoDescriptionIsAvailable" xml:space="preserve">
+        <value>Aucune description supplémentaire disponible pour le moment.</value>
+    </data>
 </root>
