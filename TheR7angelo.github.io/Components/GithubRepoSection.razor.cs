@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using TheR7angelo.github.io.Domain.Models.Validation;
+﻿using TheR7angelo.github.io.Domain.Models.Validation;
 using TheR7angelo.github.io.Service.Interface.Services;
 using TheR7angelo.github.io.Service.Models.GitHub;
 
@@ -7,7 +6,7 @@ namespace TheR7angelo.github.io.Components;
 
 public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger) : IDisposable
 {
-    private ObservableCollection<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
+    private List<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
     private bool IsLoading { get; set; } = true;
     private bool IsRateLimited { get; set; }
     private string? ResetTime { get; set; }
