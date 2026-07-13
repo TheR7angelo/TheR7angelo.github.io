@@ -6,7 +6,7 @@ using TheR7angelo.github.io.Service.Models.GitHub;
 namespace TheR7angelo.github.io.Components;
 
 public partial class GithubRepoSection(IGithubService githubService, ILogger<GithubRepoSection> logger,
-    IDialogService dialogService) : IDisposable
+    IDialogService dialogService, GithubStateService githubStateService) : IDisposable
 {
     private List<GithubRepositoryInformationDto> GithubRepositoryInformationDtos { get; } = [];
     private bool IsLoading { get; set; } = true;
@@ -65,6 +65,8 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
                 {
                     GithubRepositoryInformationDtos.Add(githubRepositoryInformationDto);
                 }
+
+                githubStateService.Repositories = GithubRepositoryInformationDtos;
             }
             else if (result.ErrorCode is ErrorCode.GithubRateLimited)
             {
