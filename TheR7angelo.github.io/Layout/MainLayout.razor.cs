@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 using MudBlazor;
 using TheR7angelo.github.io.Components;
 using TheR7angelo.github.io.Resources.Resx.HomePage;
 
 namespace TheR7angelo.github.io.Layout;
 
-public partial class MainLayout
+public partial class MainLayout(IJSRuntime jsRuntime)
 {
     private bool _isDarkMode = true;
     private bool _isNavigationDrawerOpen;
@@ -51,17 +50,17 @@ public partial class MainLayout
             return;
         }
 
-        var preferredTheme = await JsRuntime.InvokeAsync<string>("ThemeHelper.getPreferredTheme");
+        var preferredTheme = await jsRuntime.InvokeAsync<string>("ThemeHelper.getPreferredTheme");
         _isDarkMode = preferredTheme == "dark";
         _isThemeInitialized = true;
-        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", preferredTheme);
+        await jsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", preferredTheme);
         StateHasChanged();
     }
 
     private async Task DarkModeToggle()
     {
         _isDarkMode = !_isDarkMode;
-        await JsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", _isDarkMode ? "dark" : "light");
+        await jsRuntime.InvokeVoidAsync("ThemeHelper.setTheme", _isDarkMode ? "dark" : "light");
     }
 
     private void ToggleNavigationDrawer()
@@ -117,11 +116,8 @@ public partial class MainLayout
         false => Icons.Material.Outlined.DarkMode,
     };
 
-    [Inject]
-    private IJSRuntime JsRuntime { get; set; }
-
     private async Task ScrollToSection(string elementId)
     {
-        await JsRuntime.InvokeVoidAsync("ScrollHelper.scrollToElement", elementId);
+        await jsRuntime.InvokeVoidAsync("ScrollHelper.scrollToElement", elementId);
     }
 }
