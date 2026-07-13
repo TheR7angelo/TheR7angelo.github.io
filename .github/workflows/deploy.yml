@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+    paths-ignore:
+      - '**/wwwroot/Data/**'
+      - 'README.md'
+
   workflow_dispatch:
 
 permissions:
