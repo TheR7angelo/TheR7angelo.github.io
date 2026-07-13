@@ -85,7 +85,7 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
     private void ExtractResetTime(string? errorMessage)
     {
         if (string.IsNullOrEmpty(errorMessage)) return;
-        var match = System.Text.RegularExpressions.Regex.Match(errorMessage, @"\b\d{2}:\d{2}\b");
+        var match = MyRegex().Match(errorMessage);
         if (!match.Success) return;
 
         if (TimeSpan.TryParse(match.Value, out var parsedTime))
@@ -158,4 +158,7 @@ public partial class GithubRepoSection(IGithubService githubService, ILogger<Git
         CancelAutoReload();
         GC.SuppressFinalize(this);
     }
+
+    [System.Text.RegularExpressions.GeneratedRegex(@"\b\d{2}:\d{2}\b")]
+    private static partial System.Text.RegularExpressions.Regex MyRegex();
 }
