@@ -34,7 +34,7 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
         ]);
     }
 
-    private IEnumerable<ProjectDescription> FillPostgreSqlProjects()
+    private static IEnumerable<ProjectDescription> FillPostgreSqlProjects()
     {
         var qGisProject = new ProjectDescription(DatabaseProjectResources.PostgreSqlProjectQgisHeader,
             DatabaseProjectResources.PostgreSqlProjectQgisDescription, 4);
@@ -45,7 +45,7 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
         return [qGisProject, erpProject];
     }
 
-    private IEnumerable<ProjectDescription> FillSqlServerProjects()
+    private static IEnumerable<ProjectDescription> FillSqlServerProjects()
     {
         var erpProject = new ProjectDescription(DatabaseProjectResources.SqlServerProjectErpExploitationHeader,
             DatabaseProjectResources.SqlServerProjectErpExploitationDescription, 5);
@@ -53,7 +53,7 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
         return [erpProject];
     }
 
-    private IEnumerable<ProjectDescription> FillSqLiteProjects()
+    private static IEnumerable<ProjectDescription> FillSqLiteProjects()
     {
         var financeProject = new ProjectDescription(DatabaseProjectResources.SqliteProjectMyExpenseHeader,
             DatabaseProjectResources.SqliteProjectMyExpenseDescription, 3);
