@@ -69,50 +69,6 @@ namespace TheR7angelo.github.io.Resources.Resx.DatabaseProject {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 🚀 Architecture &amp; Optimization: Modeling of a spatial database (PostGIS) and indexing of complex geospatial queries.
-        ///
-        ///⚙️ Automation &amp; ETL: Writing stored functions for processing multi-format import/export geometries and scripts.
-        ///
-        ///🔐 Security &amp; Restitution: Fine-grained administration of access rights and integration of data flows into QGIS and dashboards..
-        /// </summary>
-        internal static string PostgreSqlProjectQgisDescription {
-            get {
-                return ResourceManager.GetString("PostgreSqlProjectQgisDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🗺️ Geographic Information System (GIS).
-        /// </summary>
-        internal static string PostgreSqlProjectQgisHeader {
-            get {
-                return ResourceManager.GetString("PostgreSqlProjectQgisHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 📐 Modeling: Design of a highly standardized and robust relational architecture.
-        ///
-        ///🔌 .NET Core Pipeline: Development of a REST API to expose data to the internal web application.
-        ///
-        ///📊 Reporting: Creation of optimized views for financial and operational reporting..
-        /// </summary>
-        internal static string PostgreSqlProjectSireoRCCDescription {
-            get {
-                return ResourceManager.GetString("PostgreSqlProjectSireoRCCDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏢 Enterprise ERP - SIREO RCC.
-        /// </summary>
-        internal static string PostgreSqlProjectSireoRCCHeader {
-            get {
-                return ResourceManager.GetString("PostgreSqlProjectSireoRCCHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string ProjectDialogButtonCloseContent {
@@ -127,72 +83,6 @@ namespace TheR7angelo.github.io.Resources.Resx.DatabaseProject {
         internal static string ProjectDialogHeaderContent {
             get {
                 return ResourceManager.GetString("ProjectDialogHeaderContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🎯 Centralization Pipeline (ETL): Massive extraction and consolidation of heterogeneous data (complex Excel files, telecom load calculations, GIS shapefiles) to a unified SQLite local database.
-        ///
-        ///🧠 Rules &amp; Validation Engine: Design of advanced relational queries and spatial controls to automatically point out inconsistencies (INSEE validations, absence of GPS coordinates, technical deviations).
-        ///
-        ///📈 Business Impact: Automated generation of visual error reports for designers, dividing the processing time  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SqliteProjectControlOwfDescription {
-            get {
-                return ResourceManager.GetString("SqliteProjectControlOwfDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ⚡ Data Audit &amp; Consistency Tools - Control OWF.
-        /// </summary>
-        internal static string SqliteProjectControlOwfHeader {
-            get {
-                return ResourceManager.GetString("SqliteProjectControlOwfHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🚀 Scalable Architecture: Complete redesign of the MVVM application to migrate from a WPF interface to a cross-platform .NET MAUI / Blazor solution.
-        ///
-        ///📊 Data &amp; Reporting Engine: Local modeling under SQLite for transaction tracking, analytical management of flows (inputs/outputs) and recurrences (subscriptions, fixed costs).
-        ///
-        ///🗺️ Geospatial &amp; BI Module: Integration of a system to map expenses and generate advanced reports by brand, type of payment (card, transfer, check) and financial volume..
-        /// </summary>
-        internal static string SqliteProjectMyExpenseDescription {
-            get {
-                return ResourceManager.GetString("SqliteProjectMyExpenseDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 💰 Personal Finance Manager (Open Source) - MyExpense.
-        /// </summary>
-        internal static string SqliteProjectMyExpenseHeader {
-            get {
-                return ResourceManager.GetString("SqliteProjectMyExpenseHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏎️ Performance &amp; Concurrency: Indexing, tuning of heavy queries and management of multi-user transactions.
-        ///
-        ///🧠 Business rules: Centralization of complex application logic via stored procedures (T-SQL).
-        ///
-        ///🛡️ Ops &amp; Data: Deployment of backup strategies (DRPs), high availability and feeding of BI streams in real time..
-        /// </summary>
-        internal static string SqlServerProjectErpExploitationDescription {
-            get {
-                return ResourceManager.GetString("SqlServerProjectErpExploitationDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 🏢 Infrastructure &amp; Business Logic ERP - Exploitation.
-        /// </summary>
-        internal static string SqlServerProjectErpExploitationHeader {
-            get {
-                return ResourceManager.GetString("SqlServerProjectErpExploitationHeader", resourceCulture);
             }
         }
     }

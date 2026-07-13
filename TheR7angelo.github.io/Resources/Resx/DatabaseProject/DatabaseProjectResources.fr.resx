@@ -11,56 +11,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="PostgreSqlProjectQgisHeader" xml:space="preserve">
-        <value>🗺️ Système d'Information Géographique (SIG)</value>
-    </data>
-    <data name="PostgreSqlProjectQgisDescription" xml:space="preserve">
-        <value>🚀 Architecture &amp; Optimisation : Modélisation d'une base spatiale (PostGIS) et indexation de requêtes géospatiales complexes.
-
-⚙️ Automatisation &amp; ETL : Écriture de fonctions stockées pour le traitement des géométries et scripts d'import/export multi-formats.
-
-🔐 Sécurité &amp; Restitution : Administration fine des droits d'accès et intégration des flux de données dans QGIS et tableaux de bord.</value>
-    </data>
-    <data name="PostgreSqlProjectSireoRCCHeader" xml:space="preserve">
-        <value>🏢 ERP d'Entreprise - SIREO RCC</value>
-    </data>
-    <data name="PostgreSqlProjectSireoRCCDescription" xml:space="preserve">
-        <value>📐 Modélisation : Conception d'une architecture relationnelle hautement normalisée et robuste.
-
-🔌 Pipeline .NET Core : Développement d'une API REST pour exposer les données à l'application web interne.
-
-📊 Reporting : Création de vues optimisées pour la génération de rapports financiers et opérationnels.</value>
-    </data>
-    <data name="SqlServerProjectErpExploitationHeader" xml:space="preserve">
-        <value>🏢 Infrastructure &amp; Logique Métier ERP - Exploitation</value>
-    </data>
-    <data name="SqlServerProjectErpExploitationDescription" xml:space="preserve">
-        <value>🏎️ Performance &amp; Concurrence : Indexation, tuning de requêtes lourdes et gestion des transactions multi-utilisateurs.
-
-🧠 Règles Métiers : Centralisation de la logique applicative complexe via des procédures stockées (T-SQL).
-
-🛡️ Ops &amp; Data : Déploiement de stratégies de sauvegarde (PRA), haute disponibilité et alimentation de flux BI en temps réel.</value>
-    </data>
-    <data name="SqliteProjectMyExpenseHeader" xml:space="preserve">
-        <value>💰 Gestionnaire de Finances Personneles (Open Source) - MyExpense</value>
-    </data>
-    <data name="SqliteProjectMyExpenseDescription" xml:space="preserve">
-        <value>🚀 Architecture Évolutive : Refonte complète de l'application en MVVM pour migrer d'une interface WPF vers une solution multiplateforme .NET MAUI / Blazor.
-
-📊 Moteur de Données &amp; Reporting : Modélisation locale sous SQLite pour le suivi des transactions, la gestion analytique des flux (entrées/sorties) et des récurrences (abonnements, charges fixes).
-
-🗺️ Module Géospatiale &amp; BI : Intégration d'un système pour cartographier les dépenses et générer des rapports avancés par enseigne, type de paiement (carte, virement, chèque) et volume financier.</value>
-    </data>
-    <data name="SqliteProjectControlOwfHeader" xml:space="preserve">
-        <value>⚡ Outils d'Audit &amp; Cohérence Data - Control OWF</value>
-    </data>
-    <data name="SqliteProjectControlOwfDescription" xml:space="preserve">
-        <value>🎯 Pipeline de Centralisation (ETL) : Extraction et consolidation massive de données hétérogènes (fichiers Excel complexes, calculs de charge télécom, Shapefiles SIG) vers une base locale SQLite unifiée.
-
-🧠 Moteur de Règles &amp; Validation : Conception de requêtes relationnelles avancées et contrôles spatiaux pour pointer automatiquement les incohérences (validations INSEE, absence de coordonnées GPS, écarts techniques).
-
-📈 Impact Business : Génération automatisée de rapports d'erreurs visuels pour les projeteurs, divisant le temps de traitement des dossiers finaux de raccordement fibre par un facteur de 4 à 5 heures.</value>
-    </data>
     <data name="ProjectDialogHeaderContent" xml:space="preserve">
         <value>Voici les projets majeurs où j'ai conçu et exploité la base de données</value>
     </data>

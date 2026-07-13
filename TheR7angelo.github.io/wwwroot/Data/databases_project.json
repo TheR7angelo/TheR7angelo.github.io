@@ -1,0 +1,20 @@
+﻿[
+  {
+    "TechType": 0,
+    "Name": "SQL Server",
+    "LogoPath": "/Assets/DataBase/sql-server.svg",
+    "LearnMoreUrl": "https://learn.microsoft.com/en-us/sql/sql-server/"
+  },
+  {
+    "TechType": 1,
+    "Name": "PostgreSQL",
+    "LogoPath": "/Assets/DataBase/postgresql.svg",
+    "LearnMoreUrl": "https://www.postgresql.org/"
+  },
+  {
+    "TechType": 2,
+    "Name": "SQLite",
+    "LogoPath": "/Assets/DataBase/sqlite.svg",
+    "LearnMoreUrl": "https://www.sqlite.org/"
+  }
+]
