@@ -64,7 +64,7 @@ public partial class DatabaseSection(ILogger<DatabaseSection> logger, IDialogSer
         return [financeProject, owfProject];
     }
 
-    private Task NavigateToDatabase(DataBaseTechnology tech)
+    private Task<IDialogReference> NavigateToDatabase(DataBaseTechnology tech)
     {
         logger.LogInformation("Opening project dialog for {DbName}...", tech.Name);
 
