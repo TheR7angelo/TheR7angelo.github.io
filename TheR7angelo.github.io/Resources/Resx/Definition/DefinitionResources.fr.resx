@@ -24,4 +24,7 @@ Il fournit des performances (vitesse), une architecture (stockage) et une sécur
     <data name="DataEngineeringContent" xml:space="preserve">
         <value>L'ingénieur en tuyauterie de données. Il crée les pipelines (ETL/routines), automatise les flux (pg_cron) et prépare les structures pour les rapports (stats).</value>
     </data>
+    <data name="LearnMore" xml:space="preserve">
+        <value>En savoir plus</value>
+    </data>
 </root>

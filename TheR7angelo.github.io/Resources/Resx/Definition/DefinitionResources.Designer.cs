@@ -95,5 +95,14 @@ namespace TheR7angelo.github.io.Resources.Resx.Definition {
                 return ResourceManager.GetString("DbaDefinitionHeader", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn more.
+        /// </summary>
+        internal static string LearnMore {
+            get {
+                return ResourceManager.GetString("LearnMore", resourceCulture);
+            }
+        }
     }
 }

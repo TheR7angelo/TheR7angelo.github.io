@@ -31,4 +31,7 @@ It provides performance (speed), architecture (storage), and security (backups).
     <data name="DataEngineeringContent" xml:space="preserve">
         <value>The data piping engineer. It creates the pipelines (ETL/routines), automates the flows (pg_cron), and prepares the structures for reporting (stats).</value>
     </data>
+    <data name="LearnMore" xml:space="preserve">
+        <value>Learn more</value>
+    </data>
 </root>
