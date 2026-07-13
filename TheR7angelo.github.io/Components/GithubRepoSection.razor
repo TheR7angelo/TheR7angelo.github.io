@@ -63,7 +63,7 @@
                             <MudImage Src="@githubRepositoryInformationDto.LogoUrl" Alt="@($"{githubRepositoryInformationDto.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
                             <MudText Typo="Typo.h6">@githubRepositoryInformationDto.Name</MudText>
 
-                            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="w-100 mt-4">
+                            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="w-100 mt-4" @onclick:stopPropagation>
 
                                 <MudExpansionPanel Class="rounded-lg mb-2">
                                     <TitleContent>

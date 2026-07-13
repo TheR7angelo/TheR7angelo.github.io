@@ -28,7 +28,11 @@
                     </MudCardContent>
 
                     <MudCardActions Class="justify-center">
-                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl"
+                                 EndIcon="@Icons.Material.Filled.Launch"
+                                 @onclick:stopPropagation>
+                            @DefinitionResources.LearnMore
+                        </MudLink>
                     </MudCardActions>
 
                 </MudCard>
