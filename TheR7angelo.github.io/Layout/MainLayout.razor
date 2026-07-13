@@ -47,7 +47,7 @@
         </MudDrawerHeader>
 
         <MudNavMenu>
-            @foreach (var anchor in _sections)
+            @foreach (var anchor in Sections)
             {
                 <MudNavLink OnClick="@(() => ScrollToSection(anchor.Id))" Icon="@anchor.Icon">
                     @anchor.Title

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using TheR7angelo.github.io.Components;
 using TheR7angelo.github.io.Resources.Resx.HomePage;
 
 namespace TheR7angelo.github.io.Layout;
@@ -12,15 +13,23 @@ public partial class MainLayout
     private MudTheme? _theme;
     private bool _isThemeInitialized;
 
-    public const string DatabasesSectionId = "databases-title";
-    public const string MapWorkingAreaSectionId = "mapworkingarea-title";
-    public const string GithubRepoSectionId = "githubrepo-title";
-
-    private readonly List<AnchorSection> _sections =
+    public static readonly List<AnchorSection> Sections =
     [
-        new() { Id = DatabasesSectionId, Title = HomePageResources.DatabasesSectionTitle, Icon = Icons.Material.Filled.Storage },
-        new() { Id = MapWorkingAreaSectionId, Title = HomePageResources.MapWorkingAreaSectionTitle, Icon = Icons.Material.Filled.Map },
-        new() { Id = GithubRepoSectionId, Title = HomePageResources.GithubRepoSectionTitle, Icon = Icons.Custom.Brands.GitHub },
+        new() {
+            Title = HomePageResources.DatabasesSectionTitle,
+            Icon = Icons.Material.Filled.Storage,
+            ComponentType = typeof(DatabaseSection)
+        },
+        new() {
+            Title = HomePageResources.GithubRepoSectionTitle,
+            Icon = Icons.Custom.Brands.GitHub,
+            ComponentType = typeof(GithubRepoSection)
+        },
+        new() {
+            Title = HomePageResources.MapWorkingAreaSectionTitle,
+            Icon = Icons.Material.Filled.Map,
+            ComponentType = typeof(MapWorkingAreaSection)
+        },
     ];
 
     protected override void OnInitialized()
