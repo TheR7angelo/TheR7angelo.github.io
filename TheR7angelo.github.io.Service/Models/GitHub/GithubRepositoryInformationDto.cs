@@ -2,7 +2,7 @@
 
 public class GithubRepositoryInformationDto
 {
-    public required string RepositoryUrl { get; set; }
+    public required string RepositoryUrl { get; init; }
     public required string Name { get; init; }
     public required string? Description { get; init; }
     public required string LogoUrl { get; init; }
