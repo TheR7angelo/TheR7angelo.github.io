@@ -1,0 +1,42 @@
+﻿@using Mapsui.UI.Blazor
+@using TheR7angelo.github.io.Resources.Resx.HomePage
+@using TheR7angelo.github.io.Resources.Resx.MapWorkingAreaSection
+
+<link href="TheR7angelo.github.io.Pages.Home.css" rel="stylesheet">
+<section lass="anchor-section">
+
+    <MudText Typo="Typo.h4" id="@MainLayout.MapWorkingAreaSectionId" Class="mb-5 section-heading-anchor" Align="Align.Center">
+        @HomePageResources.MapWorkingAreaSectionTitle
+    </MudText>
+
+    <div class="container">
+        <div class="row">
+            <div class="col border rounded p-0 canvas-container">
+                <MapControlComponent @ref="_mapControl" />
+            </div>
+        </div>
+    </div>
+
+    <MudText Class="mt-3">@MapWorkingAreaSectionResources.MyExplore</MudText>
+
+</section>
+
+<style>
+    .canvas-container {
+        height: 80vh;
+        overflow: hidden;
+        background-color: transparent;
+    }
+
+    .canvas-container canvas {
+        width: 100%;
+        height: 80vh;
+        display: block;
+    }
+
+    .canvas-container ::deep .mapsui-container,
+    .canvas-container ::deep div {
+        height: 80vh !important;
+        display: block;
+    }
+</style>

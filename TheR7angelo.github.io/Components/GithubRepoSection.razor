@@ -1,0 +1,120 @@
+﻿@using TheR7angelo.github.io.Resources.Resx.Definition
+@using TheR7angelo.github.io.Resources.Resx.GithubRepoSection
+@using TheR7angelo.github.io.Resources.Resx.HomePage
+
+<section class="anchor-section">
+
+    <div class="d-flex align-center justify-center gap-3 mb-5 section-heading-anchor" id="@MainLayout.GithubRepoSectionId">
+        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Large" />
+        <MudText Typo="Typo.h4" Class="font-weight-bold">
+            @HomePageResources.GithubRepoSectionTitle
+        </MudText>
+    </div>
+
+    @if (IsLoading)
+    {
+        <div class="d-flex justify-center align-center w-100 my-8">
+            <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+        </div>
+    }
+    else if (IsRateLimited)
+    {
+        <div class="d-flex flex-column align-center justify-center w-100 my-8 pa-6 mud-alert-text-error rounded-lg" style="background-color: var(--mud-palette-error-hover);">
+            <MudIcon Icon="@Icons.Material.Filled.Speed" Color="Color.Error" Size="Size.Large" Class="mb-3" />
+            <MudText Typo="Typo.h6" Color="Color.Error" Align="Align.Center" Class="font-weight-bold">
+                @GithubRepoSectionResources.GitHubAPIRateLimitExceeded
+            </MudText>
+            <MudText Typo="Typo.body1" Color="Color.Error" Align="Align.Center" Class="mt-1">
+                @GithubRepoSectionResources.GithubApiLimitReach
+            </MudText>
+
+            @if (!string.IsNullOrEmpty(ResetTime))
+            {
+                <div class="d-flex flex-column align-center mt-3 gap-2">
+                    <MudChip T="string" Color="Color.Error" Variant="Variant.Text" Icon="@Icons.Material.Filled.AccessTime">
+                        @GithubRepoSectionResources.ExpectedReset <b>@ResetTime</b>
+                    </MudChip>
+
+                    @if (SecondsLeft > 0)
+                    {
+                        <MudText Typo="Typo.caption" Color="Color.Error" Class="font-weight-medium">
+                            @GithubRepoSectionResources.AutoReloadingIn <b>@RemainingTimeText</b>...
+                        </MudText>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <MudGrid justify="Justify.Center">
+
+            @foreach (var githubRepositoryInformationDto in GithubRepositoryInformationDtos)
+            {
+                <MudItem xs="12" md="4">
+                    <MudCard Elevation="2"
+                             Class="pa-4 hover:mud-elevation-5"
+                             Style="cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                             onmouseover="this.style.transform='translateY(-10px)'"
+                             onmouseout="this.style.transform='translateY(0)'">
+
+                        <MudCardContent Class="d-flex flex-column align-center">
+                            <MudImage Src="@githubRepositoryInformationDto.LogoUrl" Alt="@($"{githubRepositoryInformationDto.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
+                            <MudText Typo="Typo.h6">@githubRepositoryInformationDto.Name</MudText>
+
+                            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="w-100 mt-4">
+
+                                <MudExpansionPanel Class="rounded-lg mb-2">
+                                    <TitleContent>
+                                        <div class="d-flex align-center gap-2">
+                                            <MudIcon Icon="@Icons.Material.Filled.Code" Size="Size.Small" />
+                                            <MudText Typo="Typo.body2" Class="font-weight-medium">
+                                                @GithubRepoSectionResources.Language
+                                            </MudText>
+                                        </div>
+                                    </TitleContent>
+                                    <ChildContent>
+                                        <div class="d-flex flex-wrap justify-center gap-2 py-2">
+                                            @foreach (var languageBadge in githubRepositoryInformationDto.LanguagesBadges)
+                                            {
+                                                <MudImage Src="@languageBadge.Url" Alt="@languageBadge.AltText" Elevation="2" Class="rounded" />
+                                            }
+                                        </div>
+                                    </ChildContent>
+                                </MudExpansionPanel>
+
+                                <MudExpansionPanel Class="rounded-lg">
+                                    <TitleContent>
+                                        <div class="d-flex align-center gap-2">
+                                            <MudIcon Icon="@Icons.Material.Filled.BarChart" Size="Size.Small" />
+                                            <MudText Typo="Typo.body2" Class="font-weight-medium">
+                                                @GithubRepoSectionResources.Statistics
+                                            </MudText>
+                                        </div>
+                                    </TitleContent>
+                                    <ChildContent>
+                                        <div class="d-flex flex-wrap justify-center gap-2 py-2">
+                                            @foreach (var statBadge in githubRepositoryInformationDto.StatsBadges)
+                                            {
+                                                <MudImage Src="@statBadge.Url" Alt="@statBadge.AltText" Elevation="2" Class="rounded"/>
+                                            }
+                                        </div>
+                                    </ChildContent>
+                                </MudExpansionPanel>
+
+                            </MudExpansionPanels>
+
+                        </MudCardContent>
+
+                        <MudCardActions Class="justify-center">
+                            <MudLink Color="Color.Info" Target="_blank" Href="@githubRepositoryInformationDto.RepositoryUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                        </MudCardActions>
+
+                    </MudCard>
+                </MudItem>
+            }
+
+        </MudGrid>
+    }
+
+</section>

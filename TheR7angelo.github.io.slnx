@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="TheR7angelo.github.io.Domain/TheR7angelo.github.io.Domain.csproj" />
+  <Project Path="TheR7angelo.github.io.Infrastructure/TheR7angelo.github.io.Infrastructure.csproj" />
+  <Project Path="TheR7angelo.github.io.Presentation/TheR7angelo.github.io.Presentation.csproj" />
+  <Project Path="TheR7angelo.github.io.Service/TheR7angelo.github.io.Service.csproj" />
+  <Project Path="TheR7angelo.github.io\\TheR7angelo.github.io.csproj" />
+</Solution>

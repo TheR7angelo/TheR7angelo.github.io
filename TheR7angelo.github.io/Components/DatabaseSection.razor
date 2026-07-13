@@ -1,0 +1,98 @@
+﻿@using TheR7angelo.github.io.Resources.Resx.DatabaseSection
+@using TheR7angelo.github.io.Resources.Resx.Definition
+@using TheR7angelo.github.io.Resources.Resx.HomePage
+
+<section class="anchor-section">
+
+    <MudText Typo="Typo.h4" id="@MainLayout.DatabasesSectionId" Class="mb-5 section-heading-anchor" Align="Align.Center">
+        @HomePageResources.DatabasesSectionTitle
+    </MudText>
+
+    <MudGrid justify="Justify.Center">
+
+        @foreach (var dataBaseTechnology in DataBaseTechnologies)
+        {
+            <MudItem xs="12" md="4">
+
+                <MudCard Elevation="2"
+                         Class="pa-4 hover:mud-elevation-5"
+                         Style="cursor: pointer;
+                         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                         onmouseover="this.style.transform='translateY(-10px)'"
+                         onmouseout="this.style.transform='translateY(0)'"
+                         @onclick='() => NavigateToDatabase(dataBaseTechnology)'>
+
+                    <MudCardContent Class="d-flex flex-column align-center">
+                        <MudImage Src="@dataBaseTechnology.LogoPath" Alt="@($"{dataBaseTechnology.Name} Logo")" Width="100" Height="100" Class="mb-3"/>
+                        <MudText Typo="Typo.h6">@dataBaseTechnology.Name</MudText>
+                    </MudCardContent>
+
+                    <MudCardActions Class="justify-center">
+                        <MudLink Color="Color.Info" Target="_blank" Href="@dataBaseTechnology.LearnMoreUrl" EndIcon="@Icons.Material.Filled.Launch">@DefinitionResources.LearnMore</MudLink>
+                    </MudCardActions>
+
+                </MudCard>
+
+            </MudItem>
+        }
+
+    </MudGrid>
+
+    <div class="mt-6 d-flex flex-column gap-3">
+
+        <MudText Typo="Typo.subtitle1" Class="fw-bold d-flex align-center gap-1" Color="Color.Primary">
+            @DatabaseSectionResources.MyVision
+
+            <MudTooltip Placement="Placement.Top" Arrow="true" Color="Color.Dark">
+
+                <ChildContent>
+                    <span style="border-bottom: 1px dashed; cursor: help;">DBA</span>
+                </ChildContent>
+
+                <TooltipContent>
+                    <MudText Typo="Typo.body2" Class="pa-1">
+                        <strong>@DefinitionResources.DbaDefinitionHeader</strong> @DefinitionResources.DbaDefinitionContent
+                    </MudText>
+                </TooltipContent>
+
+            </MudTooltip>
+
+            &
+
+            <MudTooltip Placement="Placement.Top" Arrow="true" Color="Color.Dark">
+                <ChildContent>
+                    <span style="border-bottom: 1px dashed; cursor: help;">Data Engineering</span>
+                </ChildContent>
+                <TooltipContent>
+                    <MudText Typo="Typo.body2" Class="pa-1">
+                        <strong>@DefinitionResources.DataEngineeringHeader</strong> @DefinitionResources.DataEngineeringContent
+                    </MudText>
+                </TooltipContent>
+            </MudTooltip>
+
+            :
+        </MudText>
+
+        <div class="d-flex align-start gap-2">
+            <MudIcon Icon="@Icons.Material.Filled.Architecture" Color="Color.Secondary" Size="Size.Small" Class="mt-1"/>
+            <MudText Typo="Typo.body2">
+                <strong>@DatabaseSectionResources.ArchitectureSchematicsHeader</strong> @DatabaseSectionResources.ArchitectureSchematicsContent
+            </MudText>
+        </div>
+
+        <div class="d-flex align-start gap-2">
+            <MudIcon Icon="@Icons.Material.Filled.Speed" Color="Color.Warning" Size="Size.Small" Class="mt-1"/>
+            <MudText Typo="Typo.body2">
+                <strong>@DatabaseSectionResources.PerformanceAutomationHeader</strong> @DatabaseSectionResources.PerformanceAutomationContent1 <code>WHERE</code>@DatabaseSectionResources.PerformanceAutomationContent2
+            </MudText>
+        </div>
+
+        <div class="d-flex align-start gap-2">
+            <MudIcon Icon="@Icons.Material.Filled.Build" Color="Color.Info" Size="Size.Small" Class="mt-1"/>
+            <MudText Typo="Typo.body2">
+                <strong>@DatabaseSectionResources.MaintenanceOperationHeader</strong> @DatabaseSectionResources.MaintenanceOperationContent
+            </MudText>
+        </div>
+
+    </div>
+</section>
