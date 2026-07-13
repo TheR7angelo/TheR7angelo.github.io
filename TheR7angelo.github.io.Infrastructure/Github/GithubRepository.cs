@@ -448,7 +448,7 @@ private Task<List<GithubBadgeDomain>> CreateStatsBadges(int stargazersCount, int
                 var urlBadge = $"https://img.shields.io/badge/{Uri.EscapeDataString(languageName)}-{Uri.EscapeDataString(percentageText)}-{metadata.CleanColor}?style=flat&logo={metadata.AceMode}&logoColor=white";
                 var altText = $"{languageName} ({percentageText}%)";
 
-                badges.Add(new GithubBadgeDomain {Url = urlBadge, AltText = altText});
+                badges.Add(new GithubBadgeDomain {Url = urlBadge, AltText = altText, Bytes = bytes, Text = metadata.AceMode, Color = metadata.HexColor});
             }
 
             memoryCache.Set(cacheKey, badges, CacheDuration);
