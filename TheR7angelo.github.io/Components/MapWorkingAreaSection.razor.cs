@@ -1,10 +1,10 @@
-﻿using System.Reflection;
-using Mapsui;
+﻿using Mapsui;
 using Mapsui.Layers;
 using Mapsui.Nts;
 using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.UI.Blazor;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
@@ -15,10 +15,11 @@ using IFeature = Mapsui.IFeature;
 
 namespace TheR7angelo.github.io.Components;
 
-public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService dialogService) : IDisposable
+public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService dialogService,
+    IHttpClientFactory httpClientFactory, NavigationManager navigationManager) : IDisposable
 {
-    private const string CityBoundaryResourceName = "TheR7angelo.github.io.Resources.Data.city_boundary.geojson";
-    private const string CompanySiteResourceName = "TheR7angelo.github.io.Resources.Data.company_site.geojson";
+    private const string CityBoundaryResourceName = "Data/city_boundary.geojson";
+    private const string CompanySiteResourceName = "Data/company_site.geojson";
 
     private const string CityBoundaryLayerName = "City Boundary";
     private const string CompanySiteLayerName = "Company Site";
@@ -54,7 +55,7 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
 
         try
         {
-            InitializeMap();
+            await InitializeMap();
 
             StateHasChanged();
         }
@@ -65,11 +66,11 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
         }
     }
 
-    private void InitializeMap()
+    private async Task InitializeMap()
     {
         AddBaseMapLayer();
         RegisterMapEvents();
-        LoadWorkingAreaLayers();
+        await LoadWorkingAreaLayers();
 
         if (_layers.Count is 0)
         {
@@ -92,27 +93,32 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
         _mapControl!.Map.Info += MapOnInfo;
     }
 
-    private void LoadWorkingAreaLayers()
+    private async Task LoadWorkingAreaLayers()
     {
-        AddLayerIfAvailable(CreateCityBoundaryLayer());
-        AddLayerIfAvailable(CreateCompanySiteLayer());
+        var cityLayer = await CreateLayerFromUrlAsync(CityBoundaryResourceName, CityBoundaryLayerName, CreateCityBoundaryStyle());
+        var companySiteLayer = await CreateLayerFromUrlAsync(CompanySiteResourceName, CompanySiteLayerName, CreateCompanySiteStyle());
+
+        AddLayerIfAvailable(cityLayer);
+        AddLayerIfAvailable(companySiteLayer);
     }
 
-    private GenericCollectionLayer<List<IFeature>>? CreateCityBoundaryLayer()
-    {
-        return CreateLayerFromEmbeddedGeoJson(
-            CityBoundaryResourceName,
-            CityBoundaryLayerName,
-            CreateCityBoundaryStyle());
-    }
-
-    private GenericCollectionLayer<List<IFeature>>? CreateCompanySiteLayer()
-    {
-        return CreateLayerFromEmbeddedGeoJson(
-            CompanySiteResourceName,
-            CompanySiteLayerName,
-            CreateCompanySiteStyle());
-    }
+    // private async ILayer? CreateCityBoundaryLayer()
+    // {
+    //     // return CreateLayerFromEmbeddedGeoJson(
+    //     //     CityBoundaryResourceName,
+    //     //     CityBoundaryLayerName,
+    //     //     CreateCityBoundaryStyle());
+    //
+    //     return await CreateLayerFromUrlAsync(CityBoundaryResourceName, CityBoundaryLayerName, CreateCityBoundaryStyle());
+    // }
+    //
+    // private async ILayer? CreateCompanySiteLayer()
+    // {
+    //     // return CreateLayerFromEmbeddedGeoJson(
+    //     //     CompanySiteResourceName,
+    //     //     CompanySiteLayerName,
+    //     //     CreateCompanySiteStyle());
+    // }
 
     private void AddLayerIfAvailable(ILayer? layer)
     {
@@ -221,26 +227,28 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
             options);
     }
 
-    private GenericCollectionLayer<List<IFeature>>? CreateLayerFromEmbeddedGeoJson(
+    private async Task<GenericCollectionLayer<List<IFeature>>?> CreateLayerFromUrlAsync(
         string resourceName,
         string layerName,
-        IStyle? layerStyle = null)
+        IStyle? layerStyle = null,
+        CancellationToken cancellationToken = default)
     {
+        var url = $"{navigationManager.BaseUri}{resourceName}";
         logger.LogInformation(
-            "Loading GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
-            layerName,
-            resourceName);
+            "Loading GIS layer '{LayerName}' from '{Url}'",
+            layerName, url);
 
         try
         {
-            var geoJson = ReadEmbeddedResource(resourceName);
+            var httpClient = httpClientFactory.CreateClient();
+            var geoJson = await httpClient.GetStringAsync(url, cancellationToken);
             var featureCollection = ReadFeatureCollection(geoJson);
 
-            if (featureCollection is null || featureCollection.Count is 0)
+            if (featureCollection is null || featureCollection.Count == 0)
             {
                 logger.LogWarning(
-                    "GeoJSON resource '{ResourceName}' contains no features for layer '{LayerName}'",
-                    resourceName,
+                    "GeoJSON from '{Url}' contains no features for layer '{LayerName}'",
+                    url,
                     layerName);
 
                 return null;
@@ -266,30 +274,83 @@ public partial class MapWorkingAreaSection(ILogger<Home> logger, IDialogService 
         {
             logger.LogError(
                 ex,
-                "Failed to create GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
+                "Failed to create GIS layer '{LayerName}' from '{Url}'",
                 layerName,
-                resourceName);
+                url);
 
             throw;
         }
     }
 
-    private static string ReadEmbeddedResource(string resourceName)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
+    // private GenericCollectionLayer<List<IFeature>>? CreateLayerFromEmbeddedGeoJson(
+    //     string resourceName,
+    //     string layerName,
+    //     IStyle? layerStyle = null)
+    // {
+    //     logger.LogInformation(
+    //         "Loading GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
+    //         layerName,
+    //         resourceName);
+    //
+    //     try
+    //     {
+    //         var geoJson = ReadEmbeddedResource(resourceName);
+    //         var featureCollection = ReadFeatureCollection(geoJson);
+    //
+    //         if (featureCollection is null || featureCollection.Count is 0)
+    //         {
+    //             logger.LogWarning(
+    //                 "GeoJSON resource '{ResourceName}' contains no features for layer '{LayerName}'",
+    //                 resourceName,
+    //                 layerName);
+    //
+    //             return null;
+    //         }
+    //
+    //         var features = featureCollection
+    //             .Select(ConvertToMapsuiFeature)
+    //             .ToList();
+    //
+    //         logger.LogInformation(
+    //             "Successfully created GIS layer '{LayerName}' with {FeatureCount} features",
+    //             layerName,
+    //             features.Count);
+    //
+    //         return new GenericCollectionLayer<List<IFeature>>
+    //         {
+    //             Name = layerName,
+    //             Features = features,
+    //             Style = layerStyle
+    //         };
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         logger.LogError(
+    //             ex,
+    //             "Failed to create GIS layer '{LayerName}' from embedded resource '{ResourceName}'",
+    //             layerName,
+    //             resourceName);
+    //
+    //         throw;
+    //     }
+    // }
 
-        using var stream = assembly.GetManifestResourceStream(resourceName);
-
-        if (stream is null)
-        {
-            throw new FileNotFoundException(
-                $"Embedded resource not found: {resourceName}",
-                resourceName);
-        }
-
-        using var reader = new StreamReader(stream);
-        return reader.ReadToEnd();
-    }
+    // private static string ReadEmbeddedResource(string resourceName)
+    // {
+    //     var assembly = Assembly.GetExecutingAssembly();
+    //
+    //     using var stream = assembly.GetManifestResourceStream(resourceName);
+    //
+    //     if (stream is null)
+    //     {
+    //         throw new FileNotFoundException(
+    //             $"Embedded resource not found: {resourceName}",
+    //             resourceName);
+    //     }
+    //
+    //     using var reader = new StreamReader(stream);
+    //     return reader.ReadToEnd();
+    // }
 
     private static FeatureCollection? ReadFeatureCollection(string geoJson)
     {

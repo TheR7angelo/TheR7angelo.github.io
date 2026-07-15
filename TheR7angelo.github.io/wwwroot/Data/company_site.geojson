@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "company_site",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "name": "INEO Infracom", "position": "Développeur informatique", "start": "2023-10-01", "end": null, "link": "https://www.societe.com/societe/ineo-reseaux-nouvelle-aquitaine-899889059.html", "icon": "IneoInfracom.svg" }, "geometry": { "type": "Point", "coordinates": [ -0.396432433138601, 44.831998446077485 ] } }
+]
+}
